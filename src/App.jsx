@@ -4,7 +4,6 @@ import Hero from './components/Hero';
 import Story from './components/Story';
 import Ceremony from './components/Ceremony';
 import RSVP from './components/RSVP';
-import Gifts from './components/Gifts';
 
 import BackToTop from './components/BackToTop';
 
@@ -16,7 +15,6 @@ function App() {
         <Hero />
         <Story />
         <Ceremony />
-        <Gifts />
         <RSVP />
       </main>
       

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Heart } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, Heart, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [desktopSubmenu, setDesktopSubmenu] = useState(null);
+  const [mobileSubmenu, setMobileSubmenu] = useState(null);
+  const navRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,47 +16,160 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
   }, [isOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setDesktopSubmenu(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDesktopSubmenu(null);
+      setMobileSubmenu(null);
+
+      if (window.innerWidth >= 1024) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navLinks = [
     { name: 'Início', href: '#home' },
     { name: 'Nossa História', href: '#story' },
     { name: 'Cerimônia', href: '#ceremony' },
-    { name: 'Presentes', href: '#gifts' },
+    { name: 'Galeria de Fotos', href: '#gallery' },
+    {
+      name: 'Presentes',
+      href: '#',
+      submenu: [
+        { name: 'Lista de Mimos', href: 'https://sites.icasei.com.br/michele_gustavo/pages/37276365' },
+        { name: 'Lista Camicado', href: 'https://sites.icasei.com.br/michele_gustavo/gifts' }
+      ]
+    },
     { name: 'Confirmar Presença', href: '#rsvp', isButton: true },
   ];
 
+  const toggleDesktopSubmenu = (name) => {
+    setDesktopSubmenu(desktopSubmenu === name ? null : name);
+  };
+
+  const toggleMobileSubmenu = (name) => {
+    setMobileSubmenu(mobileSubmenu === name ? null : name);
+  };
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'navbar-scrolled py-4' : 'bg-transparent py-6'}`}>
+    <nav
+      ref={navRef}
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled ? 'navbar-scrolled py-4' : 'bg-transparent py-6'
+      }`}
+    >
       <div className="container flex justify-between items-center">
         <a href="#home" className="flex items-center gap-2 group">
-          <Heart className={`w-6 h-6 ${scrolled ? 'text-primary' : 'text-white'}`} fill={scrolled ? '#1A1A1A' : 'none'} />
-          <span className={`text-xl font-serif tracking-widest uppercase transition-colors ${scrolled ? 'text-text-main' : 'text-white'}`}>G & M</span>
+          <Heart
+            className={`w-6 h-6 ${scrolled ? 'text-primary' : 'text-white'}`}
+            fill={scrolled ? 'currentColor' : 'none'}
+          />
+          <span
+            className={`text-xl font-serif tracking-widest uppercase transition-colors ${
+              scrolled ? 'text-text-main' : 'text-white'
+            }`}
+          >
+            G & M
+          </span>
         </a>
 
         {/* Desktop Menu */}
         <ul className="desktop-links items-center gap-8">
           {navLinks.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className={link.isButton ? 'btn' : `text-sm uppercase tracking-widest font-medium transition-colors ${scrolled ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'}`}
-              >
-                {link.name}
-              </a>
+            <li
+              key={link.name}
+              className={link.submenu ? 'relative' : ''}
+            >
+              {link.submenu ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleDesktopSubmenu(link.name);
+                    }}
+                    className={`flex items-center gap-1 text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+                      scrolled ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
+                    } ${desktopSubmenu === link.name ? 'text-primary opacity-100' : ''}`}
+                    aria-haspopup="true"
+                    aria-expanded={desktopSubmenu === link.name}
+                  >
+                    {link.name}
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform duration-300 ${
+                        desktopSubmenu === link.name ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`absolute top-full right-0 pt-4 transition-all duration-300 z-[100] ${
+                      desktopSubmenu === link.name
+                        ? 'opacity-100 visible translate-y-0 pointer-events-auto'
+                        : 'opacity-0 invisible -translate-y-2 pointer-events-none'
+                    }`}
+                  >
+                    <ul className="dropdown-menu min-w-[200px]">
+                      {link.submenu.map((sub) => (
+                        <li key={sub.name}>
+                          <a
+                            href={sub.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setDesktopSubmenu(null)}
+                          >
+                            {sub.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <a
+                  href={link.href}
+                  className={
+                    link.isButton
+                      ? 'btn'
+                      : `text-sm uppercase tracking-widest font-medium transition-colors ${
+                          scrolled ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
+                        }`
+                  }
+                >
+                  {link.name}
+                </a>
+              )}
             </li>
           ))}
         </ul>
 
-        {/* Mobile Toggle Button */}
-        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
+        {/* Mobile Toggle */}
+        <button
+          className="mobile-toggle"
+          onClick={() => {
+            setIsOpen(!isOpen);
+            if (isOpen) setMobileSubmenu(null);
+          }}
+          aria-label="Toggle Menu"
+        >
           {isOpen ? (
             <X className={scrolled ? 'text-text-main' : 'text-white'} size={28} />
           ) : (
@@ -62,22 +178,80 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <div className={`mobile-menu flex-col items-center justify-center transition-all duration-300 ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
-        <button className="absolute top-8 right-8" onClick={() => setIsOpen(false)} aria-label="Close Menu">
+      {/* Mobile Menu */}
+      <div
+        className={`mobile-menu flex-col items-center justify-center transition-all duration-300 ${
+          isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'
+        }`}
+      >
+        <button
+          className="absolute top-8 right-8"
+          onClick={() => {
+            setIsOpen(false);
+            setMobileSubmenu(null);
+          }}
+          aria-label="Close Menu"
+        >
           <X className="text-text-main" size={32} />
         </button>
-        
-        <div className="flex flex-col items-center gap-6 w-full max-w-xs">
+
+        <div className="flex flex-col items-center gap-4 w-full max-w-xs overflow-y-auto max-h-[70vh] py-4">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className={link.isButton ? 'btn w-full text-center mt-4' : ''}
-            >
-              {link.name}
-            </a>
+            <div key={link.name} className="w-full flex flex-col items-center">
+              {link.submenu ? (
+                <>
+                  <button
+                    onClick={() => toggleMobileSubmenu(link.name)}
+                    className="w-full flex items-center justify-center gap-2 py-4 border-bottom text-2xl font-serif uppercase tracking-widest"
+                  >
+                    {link.name}
+                    <ChevronDown
+                      size={20}
+                      className={`transition-transform ${
+                        mobileSubmenu === link.name ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`flex flex-col items-center w-full transition-all duration-300 overflow-hidden ${
+                      mobileSubmenu === link.name ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    {link.submenu.map((sub) => (
+                      <a
+                        key={sub.name}
+                        href={sub.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lg py-2 text-text-muted hover:text-primary"
+                        onClick={() => {
+                          setIsOpen(false);
+                          setMobileSubmenu(null);
+                        }}
+                      >
+                        {sub.name}
+                      </a>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <a
+                  href={link.href}
+                  onClick={() => {
+                    setIsOpen(false);
+                    setMobileSubmenu(null);
+                  }}
+                  className={
+                    link.isButton
+                      ? 'btn w-full text-center mt-4'
+                      : 'w-full text-center py-4 border-bottom text-2xl font-serif uppercase tracking-widest'
+                  }
+                >
+                  {link.name}
+                </a>
+              )}
+            </div>
           ))}
         </div>
       </div>
