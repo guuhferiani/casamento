@@ -8,6 +8,14 @@ const Gifts = () => {
   const [selectedGift, setSelectedGift] = useState(null);
   const [filter, setFilter] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyPix = () => {
+    navigator.clipboard.writeText("11982965197");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,6 +100,7 @@ const Gifts = () => {
   const resetModal = () => {
     setShowModal(false);
     setModalStep('pix');
+    setCopied(false);
   };
 
   const formatPrice = (price) => {
@@ -99,66 +108,68 @@ const Gifts = () => {
   };
 
   return (
-    <section className="gifts-page animate-fade-in">
-      <div className="container">
-        <div className="gifts-header">
-          <Link to="/" className="back-link">
-            <ArrowLeft size={20} /> Voltar para o Início
-          </Link>
-          <div className="section-title">
-            <p>Lista de Mimos</p>
-            <h2 className="logo-text">Presentes para o Casal</h2>
-            <p className="description">Escolha um presente simbólico para nos ajudar a começar nossa nova fase com muita alegria!</p>
-          </div>
-        </div>
-
-        <div className="gifts-controls">
-          <div className="filter-tabs">
-            {categories.map(cat => (
-              <button 
-                key={cat} 
-                className={`filter-btn ${filter === cat ? 'active' : ''}`}
-                onClick={() => setFilter(cat)}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-          <div className="search-bar">
-            <Search size={18} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="Buscar presente..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="mimos-grid">
-          {filteredGifts.length > 0 ? (
-            filteredGifts.map((gift) => (
-              <div key={gift.id} className="mimo-card" onClick={() => handleGiftClick(gift)}>
-                <div className="mimo-image">
-                  <img src={gift.image} alt={gift.name} onError={(e) => { e.target.src = 'https://placehold.co/400x400/f8f8f8/1a1a1a?text=' + encodeURIComponent(gift.name); }} />
-                </div>
-                <div className="mimo-content">
-                  <h4 className="mimo-name">{gift.name}</h4>
-                  <p className="mimo-price">
-                    {gift.isCota ? `${gift.shares} itens de ` : ''}
-                    {formatPrice(gift.price)}
-                  </p>
-                  <button className="mimo-btn">COMPRAR</button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="no-results">
-              <p>Nenhum presente encontrado com esse nome ou categoria.</p>
+    <>
+      <section className="gifts-page animate-fade-in">
+        <div className="container">
+          <div className="gifts-header">
+            <Link to="/" className="back-link">
+              <ArrowLeft size={20} /> Voltar para o Início
+            </Link>
+            <div className="section-title">
+              <p>Lista de Mimos</p>
+              <h2 className="logo-text">Presentes para o Casal</h2>
+              <p className="description">Escolha um presente simbólico para nos ajudar a começar nossa nova fase com muita alegria!</p>
             </div>
-          )}
+          </div>
+
+          <div className="gifts-controls">
+            <div className="filter-tabs">
+              {categories.map(cat => (
+                <button 
+                  key={cat} 
+                  className={`filter-btn ${filter === cat ? 'active' : ''}`}
+                  onClick={() => setFilter(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <div className="search-bar">
+              <Search size={18} className="search-icon" />
+              <input 
+                type="text" 
+                placeholder="Buscar presente..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="mimos-grid">
+            {filteredGifts.length > 0 ? (
+              filteredGifts.map((gift) => (
+                <div key={gift.id} className="mimo-card" onClick={() => handleGiftClick(gift)}>
+                  <div className="mimo-image">
+                    <img src={gift.image} alt={gift.name} onError={(e) => { e.target.src = 'https://placehold.co/400x400/f8f8f8/1a1a1a?text=' + encodeURIComponent(gift.name); }} />
+                  </div>
+                  <div className="mimo-content">
+                    <h4 className="mimo-name">{gift.name}</h4>
+                    <p className="mimo-price">
+                      {gift.isCota ? `${gift.shares} itens de ` : ''}
+                      {formatPrice(gift.price)}
+                    </p>
+                    <button className="mimo-btn">COMPRAR</button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-results">
+                <p>Nenhum presente encontrado com esse nome ou categoria.</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
 
       {showModal && (
         <div className="modal-overlay">
@@ -179,10 +190,19 @@ const Gifts = () => {
                 <div className="animate-fade-in text-center">
                   <div className="qr-placeholder">
                     <p className="text-sm mb-4">Escaneie o QR Code ou use a chave abaixo:</p>
-                    <div className="bg-white p-4 inline-block rounded-lg mb-4 shadow-sm border">
-                      <QrCode size={180} className="text-black" />
+                    <div className="bg-white p-4 inline-block rounded-lg mb-4 shadow-sm border overflow-hidden">
+                      <img src="/images/pix-qr.png" alt="Pix QR Code" className="w-[180px] h-[180px] object-contain mx-auto" />
                     </div>
-                    <code className="pix-key">contato@gustavoemichele.com.br</code>
+                    <div className="pix-copy-container">
+                      <code className="pix-key">11982965197</code>
+                      <button 
+                        className={`btn-copy ${copied ? 'copied' : ''}`}
+                        onClick={handleCopyPix}
+                        title="Copiar Chave Pix"
+                      >
+                        {copied ? 'Copiado!' : 'Copiar Chave'}
+                      </button>
+                    </div>
                   </div>
                   <button className="btn w-full mt-6" onClick={() => setModalStep('success')}>Já realizei o Pix</button>
                 </div>
@@ -202,7 +222,7 @@ const Gifts = () => {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 };
 

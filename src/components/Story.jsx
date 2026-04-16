@@ -1,4 +1,5 @@
 import React from 'react';
+import { Heart } from 'lucide-react';
 
 const Story = () => {
   return (
@@ -52,7 +53,9 @@ const Story = () => {
               </div>
               <h3 className="geo-names">
                 <span>Gustavo</span>
-                <span>♥ Michele</span>
+                <span className="flex items-center gap-2">
+                  <Heart className="heart-icon text-black" size={28} /> Michele
+                </span>
               </h3>
               <p className="geo-description">
                 Hoje, estamos prontos para dizer o "sim" mais importante das nossas vidas. 

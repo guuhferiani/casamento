@@ -1011,6 +1011,15 @@ nav .container {
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes slideInRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
@@ -1022,7 +1031,7 @@ nav .container {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .modal {
@@ -1035,12 +1044,7 @@ nav .container {
   padding: 40px;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes modalPop {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .close-btn {
@@ -1051,102 +1055,81 @@ nav .container {
   border: none;
   cursor: pointer;
   color: var(--text-muted);
+  z-index: 10;
 }
 
 .modal-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+}
+
+.modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.modal-content {
+  margin-top: 20px;
 }
 
 .qr-placeholder {
-  background: #f5f5f5;
-  padding: 40px;
+  background: #fafafa;
+  padding: 30px;
   text-align: center;
-  border: 2px dashed #ddd;
-  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+}
+
+.pix-copy-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .pix-key {
   display: block;
-  margin-top: 15px;
-  background: #eee;
-  padding: 10px;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  background: white;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
   word-break: break-all;
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
-/* Credit Card UI (Black Card Style) */
-.credit-card-container {
-  margin-bottom: 30px;
-  perspective: 1000px;
+.btn-copy {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-main);
 }
 
-.virtual-card {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #1A1A1A 0%, #333333 100%);
-  border-radius: 15px;
-  color: white;
-  padding: 25px;
-  position: relative;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.btn-copy:hover {
+  background: #e5e5e5;
+  border-color: #ccc;
 }
 
-.virtual-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-  pointer-events: none;
+.btn-copy.copied {
+  background: #e6f4ea;
+  border-color: #34a853;
+  color: #1e8e3e;
 }
 
-.card-chip {
-  width: 45px;
-  height: 35px;
-  background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-  border-radius: 5px;
+
+.success-icon-wrapper {
+  margin-bottom: 20px;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.card-number {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-  margin: 20px 0;
-}
-
-.card-info {
-  display: flex;
-  justify-content: space-between;
-  text-transform: uppercase;
-}
-
-.info-label {
-  font-size: 0.6rem;
-  opacity: 0.7;
-  display: block;
-}
-
-.info-value {
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-.card-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.card-form-grid .form-group:first-child {
-  grid-column: span 2;
-}
 
 /* RSVP */
 .rsvp {
@@ -1524,3 +1507,29 @@ select:focus, input:focus {
     font-size: 2.5rem;
   }
 }
+
+.heart-icon { display: inline-block; vertical-align: middle; fill: currentColor; stroke: none; margin: 0 4px; }
+.heart-icon.text-black { fill: black; }
+
+/* Gallery Page */
+.gallery-page { padding: 120px 0; background: #fff; min-height: 100vh; }
+.gallery-header { margin-bottom: 60px; text-align: center; }
+.masonry-grid { columns: 3; column-gap: 20px; width: 100%; }
+.masonry-item { break-inside: avoid; margin-bottom: 20px; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; background: #f9f9f9; transition: var(--transition); }
+.masonry-item:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.masonry-item img { width: 100%; height: auto; display: block; filter: grayscale(100%); transition: filter 0.5s ease; }
+.masonry-item:hover img { filter: grayscale(0%); }
+.item-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; opacity: 0; transition: var(--transition); }
+.masonry-item:hover .item-overlay { opacity: 1; }
+.gallery-modal { max-width: 90vw; max-height: 90vh; position: relative; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.gallery-modal img { max-width: 100%; max-height: 90vh; border-radius: 4px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+@media (max-width: 1024px) { .masonry-grid { columns: 2; } }
+@media (max-width: 768px) { .masonry-grid { columns: 1; } .gallery-page { padding: 80px 0; } }
+
+/* Gallery Navigation */
+.nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; cursor: pointer; padding: 20px; z-index: 100; transition: var(--transition); opacity: 0.7; }
+.nav-btn:hover { opacity: 1; scale: 1.1; }
+.nav-btn.prev { left: -100px; }
+.nav-btn.next { right: -100px; }
+.image-counter { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); color: white; font-size: 0.9rem; letter-spacing: 2px; }
+@media (max-width: 1200px) { .nav-btn.prev { left: 10px; } .nav-btn.next { right: 10px; } .nav-btn { background: rgba(0,0,0,0.3); border-radius: 50%; padding: 10px; } }

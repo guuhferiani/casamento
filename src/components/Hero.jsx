@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Heart } from 'lucide-react';
 
 const Hero = () => {
   const targetDate = new Date('2026-06-06T00:00:00').getTime();
@@ -27,7 +28,9 @@ const Hero = () => {
       <div className="hero-overlay"></div>
       <div className="hero-content container">
         <p className="subtitle animate-fade-in" style={{ animationDelay: '0.2s' }}>Vamos nos casar!</p>
-        <h1 className="animate-fade-in" style={{ animationDelay: '0.4s' }}>Gustavo ♥ Michele</h1>
+        <h1 className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          Gustavo <Heart className="heart-icon text-black" size={40} /> Michele
+        </h1>
         <div className="countdown animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <div className="time-box">
             <span>{timeLeft.days}</span>

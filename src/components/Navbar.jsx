@@ -53,7 +53,7 @@ const Navbar = () => {
     { name: 'Início', href: '#home' },
     { name: 'Nossa História', href: '#story' },
     { name: 'Cerimônia', href: '#ceremony' },
-    { name: 'Galeria de Fotos', href: '#gallery' },
+    { name: 'Galeria de Fotos', href: '/galeria', isInternal: true },
     {
       name: 'Presentes',
       href: '#',
@@ -106,7 +106,7 @@ const Navbar = () => {
     <nav
       ref={navRef}
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'navbar-scrolled py-4' : 'bg-transparent py-6'
+        (scrolled || !isHome) ? 'navbar-scrolled py-4' : 'bg-transparent py-6'
       }`}
     >
       <div className="container flex justify-between items-center">
@@ -117,10 +117,10 @@ const Navbar = () => {
         >
           <span
             className={`logo-text transition-colors ${
-              scrolled ? 'text-text-main' : 'text-white'
+              (scrolled || !isHome) ? 'text-text-main' : 'text-white'
             }`}
           >
-            G ♥ M
+            G <Heart className="heart-icon" size={20} /> M
           </span>
         </Link>
 
@@ -140,7 +140,7 @@ const Navbar = () => {
                       toggleDesktopSubmenu(link.name);
                     }}
                     className={`flex items-center gap-1 text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
-                      scrolled ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
+                      (scrolled || !isHome) ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
                     } ${desktopSubmenu === link.name ? 'text-primary opacity-100' : ''}`}
                     aria-haspopup="true"
                     aria-expanded={desktopSubmenu === link.name}
@@ -194,7 +194,7 @@ const Navbar = () => {
                     link.isButton
                       ? 'btn'
                       : `text-sm uppercase tracking-widest font-medium transition-colors ${
-                          scrolled ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
+                          (scrolled || !isHome) ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
                         }`
                   }
                 >
@@ -215,11 +215,12 @@ const Navbar = () => {
           aria-label="Toggle Menu"
         >
           {isOpen ? (
-            <X className={scrolled || !isHome ? 'text-text-main' : 'text-white'} size={28} />
+            <X className={(scrolled || !isHome) ? 'text-text-main' : 'text-white'} size={28} />
           ) : (
-            <Menu className={scrolled || !isHome ? 'text-text-main' : 'text-white'} size={28} />
+            <Menu className={(scrolled || !isHome) ? 'text-text-main' : 'text-white'} size={28} />
           )}
         </button>
+
       </div>
 
       {/* Mobile Menu */}
