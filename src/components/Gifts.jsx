@@ -34,8 +34,8 @@ const Gifts = () => {
   const giftsData = [    // Lua de Mel
     { id: 1, name: 'Cota de Lua de Mel', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon-fun.png' },
     { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon-cat.png' },
-    { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
-    { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner-beach.png' },
+    { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner-romantic.png' },
     { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/diving.png' },
