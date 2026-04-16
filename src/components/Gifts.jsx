@@ -31,37 +31,33 @@ const Gifts = () => {
   }, [showModal]);
 
   const categories = ['Todos', 'Lua de Mel', 'Vida de Casado', 'Pets', 'Poupança'];
-
   const giftsData = [
     // Lua de Mel
     { id: 1, name: 'Cota de Lua de Mel', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
-
     { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon.png' },
-
-
     { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
-    { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
-    { id: 11, name: 'Passeio de lancha', price: 462.69, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
-    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
-    { id: 13, name: 'Drink de boas vindas ao Hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
-    { id: 14, name: 'Drinks no bar do hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/diving.png' },
+    { id: 11, name: 'Passeio de lancha', price: 462.69, category: 'Lua de Mel', image: '/images/gifts/boat.png' },
+    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
+    { id: 13, name: 'Drink de boas vindas ao Hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
+    { id: 14, name: 'Drinks no bar do hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 15, name: 'Café da manhã no hotel pós noite de núpcias', price: 249.80, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
     { id: 16, name: 'Café da manhã servido no quarto', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
-    { id: 17, name: 'Champagne com cesta de frutas para a noite de núpcias', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
-    { id: 18, name: 'Tarde de spa para os noivos relaxarem', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
-    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
-    { id: 20, name: 'Massagem relaxante para o casal', price: 539.37, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 17, name: 'Champagne com cesta de frutas para a noite de núpcias', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/champagne.png' },
+    { id: 18, name: 'Tarde de spa para os noivos relaxarem', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
+    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
+    { id: 20, name: 'Massagem relaxante para o casal', price: 539.37, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
     
     // Vida de Casado
     { id: 21, name: 'Comprinhas de "sobrevivência" para a chegada na casa nova', price: 935.37, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
-    { id: 22, name: 'Conjunto de controles remotos, para não ter briga', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/breakfast.png' },
-    { id: 23, name: 'Apreciar um bom churrasco', price: 295.59, category: 'Vida de Casado', image: '/images/gifts/dinner.png' },
-    { id: 24, name: 'Remedinho para ressaca do noivo', price: 97.58, category: 'Vida de Casado', image: '/images/gifts/breakfast.png' },
-    { id: 25, name: 'Balança para os noivos não engordarem após o casamento', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/breakfast.png' },
-    { id: 26, name: 'Um bom vinho para um final de tarde', price: 220.05, category: 'Vida de Casado', image: '/images/gifts/dinner.png' },
+    { id: 22, name: 'Conjunto de controles remotos, para não ter briga', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/remotes.png' },
+    { id: 23, name: 'Apreciar um bom churrasco', price: 295.59, category: 'Vida de Casado', image: '/images/gifts/bbq.png' },
+    { id: 24, name: 'Remedinho para ressaca do noivo', price: 97.58, category: 'Vida de Casado', image: '/images/gifts/hangover.png' },
+    { id: 25, name: 'Balança para os noivos não engordarem após o casamento', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/scale.png' },
+    { id: 26, name: 'Um bom vinho para um final de tarde', price: 220.05, category: 'Vida de Casado', image: '/images/gifts/wine.png' },
     { id: 27, name: 'Ajuda com o excesso de bagagem', price: 174.27, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
     { id: 28, name: 'Ida às compras no centro da cidade', price: 783.15, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
     { id: 29, name: 'Comprar lembrancinhas para a família e amigos', price: 326.49, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
@@ -82,7 +78,7 @@ const Gifts = () => {
     { id: 40, name: 'Vale-presente Solidário', price: 204.02, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
     { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
     { id: 42, name: 'Vale-presente Amigo', price: 192.58, category: 'Poupança', image: '/images/gifts/shopping.png' },
-    { id: 43, name: 'Cota para nosso Chá de Porquinho Virtual', price: 364.26, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
+    { id: 44, name: 'Cota para nosso Chá de Porquinho Virtual', price: 364.26, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
   ];
 
   const filteredGifts = giftsData.filter(gift => {

@@ -945,26 +945,28 @@ nav .container {
 }
 
 .mimo-card {
-  background: white;
-  border-radius: 12px;
+  background: #F2EFE9;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
   transition: var(--transition);
   cursor: pointer;
-  border: 1px solid #f0f0f0;
+  border: 1px solid rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
 
 .mimo-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  border-color: #e0e0e0;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .mimo-image {
-  height: 250px;
-  background: #f8f8f8;
+  aspect-ratio: 1/1;
+  height: auto;
+  background: white;
+  margin: 10px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -972,54 +974,47 @@ nav .container {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition);
-}
-
-.mimo-card:hover .mimo-image img {
-  transform: scale(1.05);
 }
 
 .mimo-content {
-  padding: 25px;
+  padding: 20px;
   text-align: center;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .mimo-name {
-  font-size: 1.1rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: var(--text-main);
-  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .mimo-price {
   font-family: var(--font-sans);
   font-weight: 700;
   color: var(--primary);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-bottom: 20px;
 }
 
 .mimo-btn {
-  background: #555;
+  background: #1A1A1A;
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 12px;
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 1px;
-  border-radius: 4px;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: var(--transition);
   width: 100%;
 }
 
 .mimo-card:hover .mimo-btn {
-  background: var(--primary);
+  background: #444;
 }
 
 .no-results {
