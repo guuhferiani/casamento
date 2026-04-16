@@ -73,7 +73,7 @@ const Gifts = () => {
     { id: 35, name: 'Cofrinho dos noivos', price: 593.16, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
     { id: 36, name: 'Cofre novo para guardar as economias', price: 143.36, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
     { id: 37, name: 'Vale Presente', price: 593.16, category: 'Poupança', image: '/images/gifts/shopping.png' },
-    { id: 38, name: 'UNIÃO (Shrek)', price: 249.80, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/honeymoon.png' },
+
     { id: 39, name: 'Vale-presente Especial', price: 215.47, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
     { id: 40, name: 'Vale-presente Solidário', price: 204.02, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
     { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
