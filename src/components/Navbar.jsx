@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Heart, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
@@ -44,6 +45,10 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
+
   const navLinks = [
     { name: 'Início', href: '#home' },
     { name: 'Nossa História', href: '#story' },
@@ -53,12 +58,41 @@ const Navbar = () => {
       name: 'Presentes',
       href: '#',
       submenu: [
-        { name: 'Lista de Mimos', href: 'https://sites.icasei.com.br/michele_gustavo/pages/37276365' },
-        { name: 'Lista Camicado', href: 'https://sites.icasei.com.br/michele_gustavo/gifts' }
+        { name: 'Lista de Mimos', href: '/lista-de-mimos', isInternal: true },
+        { name: 'Lista Camicado', href: '/lista-camicado', isInternal: true }
       ]
     },
     { name: 'Confirmar Presença', href: '#rsvp', isButton: true },
   ];
+
+  const handleNavClick = (e, href, isInternal) => {
+    if (isInternal) {
+      setIsOpen(false);
+      return;
+    }
+
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      if (!isHome) {
+        navigate('/' + href);
+      } else {
+        const element = document.querySelector(href);
+        if (element) {
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+      setIsOpen(false);
+    }
+  };
 
   const toggleDesktopSubmenu = (name) => {
     setDesktopSubmenu(desktopSubmenu === name ? null : name);
@@ -76,19 +110,19 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex justify-between items-center">
-        <a href="#home" className="flex items-center gap-2 group">
-          <Heart
-            className={`w-6 h-6 ${scrolled ? 'text-primary' : 'text-white'}`}
-            fill={scrolled ? 'currentColor' : 'none'}
-          />
+        <Link 
+          to="/" 
+          className="flex items-center gap-2 group"
+          onClick={() => { setIsOpen(false); window.scrollTo(0, 0); }}
+        >
           <span
-            className={`text-xl font-serif tracking-widest uppercase transition-colors ${
+            className={`logo-text transition-colors ${
               scrolled ? 'text-text-main' : 'text-white'
             }`}
           >
-            G & M
+            G ♥ M
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="desktop-links items-center gap-8">
@@ -130,14 +164,23 @@ const Navbar = () => {
                     <ul className="dropdown-menu min-w-[200px]">
                       {link.submenu.map((sub) => (
                         <li key={sub.name}>
-                          <a
-                            href={sub.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => setDesktopSubmenu(null)}
-                          >
-                            {sub.name}
-                          </a>
+                          {sub.isInternal ? (
+                            <Link
+                              to={sub.href}
+                              onClick={(e) => handleNavClick(e, sub.href, true)}
+                            >
+                              {sub.name}
+                            </Link>
+                          ) : (
+                            <a
+                              href={sub.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => setDesktopSubmenu(null)}
+                            >
+                              {sub.name}
+                            </a>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -146,6 +189,7 @@ const Navbar = () => {
               ) : (
                 <a
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className={
                     link.isButton
                       ? 'btn'
@@ -171,9 +215,9 @@ const Navbar = () => {
           aria-label="Toggle Menu"
         >
           {isOpen ? (
-            <X className={scrolled ? 'text-text-main' : 'text-white'} size={28} />
+            <X className={scrolled || !isHome ? 'text-text-main' : 'text-white'} size={28} />
           ) : (
-            <Menu className={scrolled ? 'text-text-main' : 'text-white'} size={28} />
+            <Menu className={scrolled || !isHome ? 'text-text-main' : 'text-white'} size={28} />
           )}
         </button>
       </div>
@@ -219,29 +263,37 @@ const Navbar = () => {
                     }`}
                   >
                     {link.submenu.map((sub) => (
-                      <a
-                        key={sub.name}
-                        href={sub.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-lg py-2 text-text-muted hover:text-primary"
-                        onClick={() => {
-                          setIsOpen(false);
-                          setMobileSubmenu(null);
-                        }}
-                      >
-                        {sub.name}
-                      </a>
+                      sub.isInternal ? (
+                        <Link
+                          key={sub.name}
+                          to={sub.href}
+                          className="text-lg py-2 text-text-muted hover:text-primary"
+                          onClick={(e) => handleNavClick(e, sub.href, true)}
+                        >
+                          {sub.name}
+                        </Link>
+                      ) : (
+                        <a
+                          key={sub.name}
+                          href={sub.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-lg py-2 text-text-muted hover:text-primary"
+                          onClick={() => {
+                            setIsOpen(false);
+                            setMobileSubmenu(null);
+                          }}
+                        >
+                          {sub.name}
+                        </a>
+                      )
                     ))}
                   </div>
                 </>
               ) : (
                 <a
                   href={link.href}
-                  onClick={() => {
-                    setIsOpen(false);
-                    setMobileSubmenu(null);
-                  }}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className={
                     link.isButton
                       ? 'btn w-full text-center mt-4'

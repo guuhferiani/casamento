@@ -1,77 +1,162 @@
-import React, { useState } from 'react';
-import { Gift, CreditCard, QrCode, X, CheckCircle2, ChevronLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Gift, QrCode, X, CheckCircle2, ArrowLeft, Search } from 'lucide-react';
 
 const Gifts = () => {
   const [showModal, setShowModal] = useState(false);
-  const [modalStep, setModalStep] = useState('options'); // 'options', 'pix', 'credit', 'success'
+  const [modalStep, setModalStep] = useState('pix'); // 'pix', 'success'
   const [selectedGift, setSelectedGift] = useState(null);
-  const [cardData, setCardData] = useState({
-    number: '',
-    name: '',
-    expiry: '',
-    cvv: ''
-  });
+  const [filter, setFilter] = useState('Todos');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const virtualGifts = [
-    { id: 1, name: 'Cota para o champagne da festa', price: 'R$ 150,00', icon: '🥂' },
-    { id: 2, name: 'Ajuda no enxoval', price: 'R$ 300,00', icon: '🏠' },
-    { id: 3, name: 'Gasolina para o carro da noiva', price: 'R$ 100,00', icon: '🚗' },
-    { id: 4, name: 'Jantar romântico na Lua de Mel', price: 'R$ 250,00', icon: '🍷' },
-    { id: 5, name: 'Cota miau (para os gatos)', price: 'R$ 50,00', icon: '🐈' },
-    { id: 6, name: 'Mimo surpresa', price: 'Livre', icon: '🎁' },
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [showModal]);
+
+  const categories = ['Todos', 'Lua de Mel', 'Vida de Casado', 'Pets', 'Poupança'];
+
+  const giftsData = [
+    // Lua de Mel
+    { id: 1, name: 'Cota de Lua de Mel', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 2, name: 'Cotas de lua de mel!', price: 135.35, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon.png' },
+    { id: 4, name: 'Cotas de lua de mel!', price: 593.16, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 5, name: 'Pagar grande parte da lua de mel', price: 593.16, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 11, name: 'Passeio de lancha', price: 462.69, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 13, name: 'Drink de boas vindas ao Hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 14, name: 'Drinks no bar do hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 15, name: 'Café da manhã no hotel pós noite de núpcias', price: 249.80, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
+    { id: 16, name: 'Café da manhã servido no quarto', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
+    { id: 17, name: 'Champagne com cesta de frutas para a noite de núpcias', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
+    { id: 18, name: 'Tarde de spa para os noivos relaxarem', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    { id: 20, name: 'Massagem relaxante para o casal', price: 539.37, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
+    
+    // Vida de Casado
+    { id: 21, name: 'Comprinhas de "sobrevivência" para a chegada na casa nova', price: 935.37, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
+    { id: 22, name: 'Conjunto de controles remotos, para não ter briga', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/breakfast.png' },
+    { id: 23, name: 'Apreciar um bom churrasco', price: 295.59, category: 'Vida de Casado', image: '/images/gifts/dinner.png' },
+    { id: 24, name: 'Remedinho para ressaca do noivo', price: 97.58, category: 'Vida de Casado', image: '/images/gifts/breakfast.png' },
+    { id: 25, name: 'Balança para os noivos não engordarem após o casamento', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/breakfast.png' },
+    { id: 26, name: 'Um bom vinho para um final de tarde', price: 220.05, category: 'Vida de Casado', image: '/images/gifts/dinner.png' },
+    { id: 27, name: 'Ajuda com o excesso de bagagem', price: 174.27, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
+    { id: 28, name: 'Ida às compras no centro da cidade', price: 783.15, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
+    { id: 29, name: 'Comprar lembrancinhas para a família e amigos', price: 326.49, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
+    
+    // Pets
+    { id: 30, name: 'Arranhador para gatos', price: 128.49, category: 'Pets', image: '/images/gifts/cat-accessories.png' },
+    { id: 31, name: 'Divã para gatos', price: 143.36, category: 'Pets', image: '/images/gifts/cat-accessories.png' },
+    { id: 32, name: 'Rede para gatos', price: 143.36, category: 'Pets', isCota: true, shares: 5, image: '/images/gifts/cat-accessories.png' },
+    
+    // Poupança / Brincadeiras
+    { id: 33, name: 'Ajude a dar uma MEGA engordada no nosso porquinho', price: 593.16, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
+    { id: 34, name: 'Ajude a engordar nosso porquinho', price: 295.59, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
+    { id: 35, name: 'Cofrinho dos noivos', price: 593.16, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
+    { id: 36, name: 'Cofre novo para guardar as economias', price: 143.36, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
+    { id: 37, name: 'Vale Presente', price: 593.16, category: 'Poupança', image: '/images/gifts/shopping.png' },
+    { id: 38, name: 'UNIÃO (Shrek)', price: 249.80, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/honeymoon.png' },
+    { id: 39, name: 'Vale-presente Especial', price: 215.47, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
+    { id: 40, name: 'Vale-presente Solidário', price: 204.02, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
+    { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
+    { id: 42, name: 'Vale-presente Amigo', price: 192.58, category: 'Poupança', image: '/images/gifts/shopping.png' },
+    { id: 43, name: 'Cota para nosso Chá de Porquinho Virtual', price: 364.26, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
   ];
+
+  const filteredGifts = giftsData.filter(gift => {
+    const matchesFilter = filter === 'Todos' || gift.category === filter;
+    const matchesSearch = gift.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   const handleGiftClick = (gift) => {
     setSelectedGift(gift);
-    setModalStep('options');
+    setModalStep('pix');
     setShowModal(true);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCardData(prev => ({ ...prev, [name]: value }));
   };
 
   const resetModal = () => {
     setShowModal(false);
-    setModalStep('options');
-    setCardData({ number: '', name: '', expiry: '', cvv: '' });
+    setModalStep('pix');
+  };
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
   };
 
   return (
-    <section id="gifts" className="gifts">
+    <section className="gifts-page animate-fade-in">
       <div className="container">
-        <div className="section-title">
-          <p>Presentes</p>
-          <h2>Lista de Mimos</h2>
+        <div className="gifts-header">
+          <Link to="/" className="back-link">
+            <ArrowLeft size={20} /> Voltar para o Início
+          </Link>
+          <div className="section-title">
+            <p>Lista de Mimos</p>
+            <h2 className="logo-text">Presentes para o Casal</h2>
+            <p className="description">Escolha um presente simbólico para nos ajudar a começar nossa nova fase com muita alegria!</p>
+          </div>
         </div>
 
-        <div className="gifts-grid">
-          <div className="virtual-gifts">
-            <h3>Mimos Virtuais</h3>
-            <p className="subtitle">Contribua com brincadeiras e experiências para o casal</p>
-            <div className="items-grid">
-              {virtualGifts.map((gift) => (
-                <div key={gift.id} className="gift-item" onClick={() => handleGiftClick(gift)}>
-                  <div className="gift-icon">{gift.icon}</div>
-                  <h4>{gift.name}</h4>
-                  <p>{gift.price}</p>
-                  <button className="btn-small">Presentear</button>
-                </div>
-              ))}
-            </div>
+        <div className="gifts-controls">
+          <div className="filter-tabs">
+            {categories.map(cat => (
+              <button 
+                key={cat} 
+                className={`filter-btn ${filter === cat ? 'active' : ''}`}
+                onClick={() => setFilter(cat)}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
+          <div className="search-bar">
+            <Search size={18} className="search-icon" />
+            <input 
+              type="text" 
+              placeholder="Buscar presente..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
 
-          <div className="store-lists">
-            <h3>Listas em Lojas</h3>
-            <p className="subtitle">Se preferir itens físicos, confira nossa lista oficial</p>
-            <div className="store-cards">
-              <a href="https://www.camicado.com.br/lista/convidado/gustavos2michele" target="_blank" rel="noopener noreferrer" className="store-card">
-                <Gift className="icon" />
-                <span>Lista na Camicado</span>
-              </a>
+        <div className="mimos-grid">
+          {filteredGifts.length > 0 ? (
+            filteredGifts.map((gift) => (
+              <div key={gift.id} className="mimo-card" onClick={() => handleGiftClick(gift)}>
+                <div className="mimo-image">
+                  <img src={gift.image} alt={gift.name} onError={(e) => { e.target.src = 'https://placehold.co/400x400/f8f8f8/1a1a1a?text=' + encodeURIComponent(gift.name); }} />
+                </div>
+                <div className="mimo-content">
+                  <h4 className="mimo-name">{gift.name}</h4>
+                  <p className="mimo-price">
+                    {gift.isCota ? `${gift.shares} itens de ` : ''}
+                    {formatPrice(gift.price)}
+                  </p>
+                  <button className="mimo-btn">COMPRAR</button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="no-results">
+              <p>Nenhum presente encontrado com esse nome ou categoria.</p>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -80,127 +165,36 @@ const Gifts = () => {
           <div className="modal">
             <button className="close-btn" onClick={resetModal}><X /></button>
             
-            {modalStep !== 'options' && modalStep !== 'success' && (
-              <button className="absolute left-6 top-6 text-muted hover:text-primary transition-colors" onClick={() => setModalStep('options')}>
-                <ChevronLeft size={20} />
-              </button>
-            )}
-
             <div className="modal-header">
-              {modalStep === 'options' && <Gift className="w-12 h-12 text-primary mx-auto mb-4" />}
               {modalStep === 'pix' && <QrCode className="w-12 h-12 text-primary mx-auto mb-4" />}
-              {modalStep === 'credit' && <CreditCard className="w-12 h-12 text-primary mx-auto mb-4" />}
               {modalStep === 'success' && <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-4" />}
               
               <h3>{modalStep === 'success' ? 'Muito Obrigado!' : 'Presentear Casal'}</h3>
-              <p>Escolha: <strong>{selectedGift?.name}</strong></p>
+              <p>Você escolheu: <strong>{selectedGift?.name}</strong></p>
+              <p className="price-tag">{formatPrice(selectedGift?.price)}</p>
             </div>
 
             <div className="modal-content mt-6">
-              {modalStep === 'options' && (
-                <div className="flex flex-col gap-4">
-                  <button className="btn w-full flex items-center justify-center gap-3" onClick={() => setModalStep('pix')}>
-                    <QrCode size={20} /> Pagar com Pix
-                  </button>
-                  <button className="btn btn-outline w-full flex items-center justify-center gap-3" onClick={() => setModalStep('credit')}>
-                    <CreditCard size={20} /> Cartão de Crédito
-                  </button>
-                </div>
-              )}
-
               {modalStep === 'pix' && (
-                <div className="animate-fade-in">
+                <div className="animate-fade-in text-center">
                   <div className="qr-placeholder">
-                    <p className="text-sm mb-4">Escaneie o QR Code abaixo:</p>
-                    <div className="bg-white p-4 inline-block rounded-lg mb-4">
-                      <QrCode size={150} className="text-black" />
+                    <p className="text-sm mb-4">Escaneie o QR Code ou use a chave abaixo:</p>
+                    <div className="bg-white p-4 inline-block rounded-lg mb-4 shadow-sm border">
+                      <QrCode size={180} className="text-black" />
                     </div>
-                    <code className="pix-key text-xs block bg-gray-100 p-2 rounded">sua-chave-pix-aqui@email.com</code>
+                    <code className="pix-key">contato@gustavoemichele.com.br</code>
                   </div>
                   <button className="btn w-full mt-6" onClick={() => setModalStep('success')}>Já realizei o Pix</button>
                 </div>
               )}
 
-              {modalStep === 'credit' && (
-                <div className="animate-fade-in">
-                  <div className="credit-card-container">
-                    <div className="virtual-card">
-                      <div className="card-chip"></div>
-                      <div className="card-number">
-                        {cardData.number || '•••• •••• •••• ••••'}
-                      </div>
-                      <div className="card-info">
-                        <div>
-                          <span className="info-label">Titular</span>
-                          <span className="info-value">{cardData.name || 'NOME NO CARTÃO'}</span>
-                        </div>
-                        <div>
-                          <span className="info-label">Validade</span>
-                          <span className="info-value">{cardData.expiry || 'MM/AA'}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <form className="card-form-grid" onSubmit={(e) => { e.preventDefault(); setModalStep('success'); }}>
-                    <div className="form-group">
-                      <label className="text-xs uppercase tracking-wider mb-1">Número do Cartão</label>
-                      <input 
-                        type="text" 
-                        name="number"
-                        placeholder="0000 0000 0000 0000"
-                        maxLength="19"
-                        value={cardData.number}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="text-xs uppercase tracking-wider mb-1">Nome do Titular</label>
-                      <input 
-                        type="text" 
-                        name="name"
-                        placeholder="Como no cartão"
-                        value={cardData.name}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="text-xs uppercase tracking-wider mb-1">Validade</label>
-                      <input 
-                        type="text" 
-                        name="expiry"
-                        placeholder="MM/AA"
-                        maxLength="5"
-                        value={cardData.expiry}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="text-xs uppercase tracking-wider mb-1">CVV</label>
-                      <input 
-                        type="text" 
-                        name="cvv"
-                        placeholder="000"
-                        maxLength="3"
-                        value={cardData.cvv}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <button type="submit" className="btn w-full mt-4" style={{ gridColumn: 'span 2' }}>
-                      Confirmar Presente
-                    </button>
-                  </form>
-                </div>
-              )}
-
               {modalStep === 'success' && (
                 <div className="text-center animate-fade-in">
+                  <div className="success-icon-wrapper">
+                    <CheckCircle2 size={60} className="text-green-500 mx-auto" />
+                  </div>
                   <p className="text-lg font-medium mb-4">Seu carinho torna nossa história ainda mais especial!</p>
-                  <p className="text-muted mb-8">Recebemos sua confirmação de presente. Mal podemos esperar para te ver no grande dia!</p>
+                  <p className="text-muted mb-8">Obrigado por nos presentear. Sua contribuição foi registrada com sucesso.</p>
                   <button className="btn w-full" onClick={resetModal}>Fechar</button>
                 </div>
               )}

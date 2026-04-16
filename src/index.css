@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.cdnfonts.com/css/dk-midnight-chalker');
 
 :root {
   --primary: #1A1A1A; /* Black */
@@ -7,7 +8,7 @@
   --text-main: #1A1A1A;
   --text-muted: #666666;
   --white: #FFFFFF;
-  --font-serif: 'Playfair Display', serif;
+  --font-serif: 'Inter', sans-serif;
   --font-sans: 'Inter', sans-serif;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -164,6 +165,13 @@ nav .container {
   background-color: rgba(255, 255, 255, 0.98) !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
   backdrop-filter: blur(8px);
+}
+
+.logo-text {
+  font-family: 'DK Midnight Chalker', sans-serif !important;
+  font-size: 1.8rem !important;
+  text-transform: none !important;
+  letter-spacing: 2px !important;
 }
 
 /* --- Mobile Menu --- */
@@ -357,7 +365,7 @@ nav .container {
 /* Hero */
 .hero {
   height: 100vh;
-  background: url('/images/hero.png') no-repeat center center/cover;
+  background: url('/images/hero.webp') no-repeat center center/cover;
   position: relative;
   display: flex;
   align-items: center;
@@ -379,9 +387,10 @@ nav .container {
 }
 
 .hero h1 {
-  font-size: 5rem;
-  margin: 20px 0;
-  letter-spacing: 5px;
+  font-family: 'DK Midnight Chalker', sans-serif;
+  font-size: 6.5rem;
+  margin: 10px 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .hero .subtitle {
@@ -424,7 +433,7 @@ nav .container {
 }
 
 @media (max-width: 768px) {
-  .hero h1 { font-size: 3rem; }
+  .hero h1 { font-size: 3.5rem; }
   .countdown { gap: 10px; }
   .time-box { min-width: 80px; padding: 15px 5px; }
   .time-box span { font-size: 1.5rem; }
@@ -570,7 +579,7 @@ nav .container {
 }
 
 .geo-names {
-  font-family: var(--font-serif);
+  font-family: 'DK Midnight Chalker', sans-serif;
   font-size: 3.5rem;
   line-height: 1.1;
   margin-bottom: 30px;
@@ -722,129 +731,316 @@ nav .container {
   }
 }
 
-/* Gifts */
-.gifts {
-  background-color: var(--white);
+/* Gifts Page */
+.gifts-page {
+  padding: 120px 0;
+  background-color: #fcfcfc;
+  min-height: 100vh;
 }
 
-.gifts-grid {
+.gifts-header {
+  margin-bottom: 60px;
+}
+
+.back-link {
   display: flex;
-  flex-direction: column;
-  gap: 80px;
-}
-
-.gifts h3 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.gifts .subtitle {
-  text-align: center;
+  align-items: center;
+  gap: 8px;
   color: var(--text-muted);
-  margin-bottom: 40px;
-}
-
-.items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
-}
-
-.gift-item {
-  background: var(--white);
-  border: 1px solid #eee;
-  padding: 30px;
-  text-align: center;
-  border-radius: 8px;
-  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
   transition: var(--transition);
 }
 
-.gift-item:hover {
-  transform: translateY(-5px);
-  border-color: var(--primary);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-.gift-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
-}
-
-.gift-item h4 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 5px;
-}
-
-.gift-item p {
+.back-link:hover {
   color: var(--primary);
-  font-weight: 700;
-  margin-bottom: 15px;
+  transform: translateX(-5px);
 }
 
-.btn-small {
-  background: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
+.gifts-page .section-title {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.gifts-page .description {
+  margin-top: 15px;
+  color: var(--text-muted);
+  max-width: 600px;
+}
+
+.gifts-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.filter-btn {
   padding: 8px 20px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.filter-btn:hover {
+  border-color: var(--primary);
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.search-bar {
+  position: relative;
+  min-width: 300px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 15px 12px 45px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.search-bar input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.02);
+}
+
+/* Mimos Grid */
+.mimos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.mimo-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mimo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  border-color: #e0e0e0;
+}
+
+.mimo-image {
+  height: 250px;
+  background: #f8f8f8;
+  overflow: hidden;
+}
+
+.mimo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.mimo-card:hover .mimo-image img {
+  transform: scale(1.05);
+}
+
+.mimo-content {
+  padding: 25px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mimo-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.mimo-price {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.mimo-btn {
+  background: #555;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 1px;
   border-radius: 4px;
   cursor: pointer;
   transition: var(--transition);
+  width: 100%;
 }
 
-.gift-item:hover .btn-small {
+.mimo-card:hover .mimo-btn {
   background: var(--primary);
-  color: white;
 }
 
-.store-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 100px 0;
+  color: var(--text-muted);
 }
 
-.store-card {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 20px 40px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  color: var(--text-main);
-  font-weight: 500;
+@media (max-width: 768px) {
+  .gifts-page { padding: 100px 0; }
+  .mimos-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .search-bar { min-width: 100%; order: -1; }
+  .gifts-header .section-title h2 { font-size: 2.2rem; }
 }
 
-.store-card:hover {
-  border-color: var(--primary);
+/* Modal Improvements */
+.back-modal-btn {
+  position: absolute;
+  left: 20px;
+  top: 24px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.back-modal-btn:hover { color: var(--primary); }
+
+.price-tag {
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--primary);
+  margin-top: 5px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.qr-placeholder {
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 12px;
+}
+
+.pix-key {
+  display: block;
+  font-size: 0.85rem;
+  background: white;
+  padding: 12px;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  margin-top: 10px;
+  word-break: break-all;
+}
+
+.credit-card-preview {
+  margin-bottom: 30px;
+}
+
+.virtual-card {
+  background: linear-gradient(135deg, #1A1A1A 0%, #444 100%);
+  padding: 25px;
+  border-radius: 15px;
+  color: white;
+  aspect-ratio: 1.58 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.card-number-display {
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  font-family: monospace;
+  margin: 20px 0;
+}
+
+
+
+.success-icon-wrapper {
+  margin-bottom: 20px;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 100;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal {
   background: white;
   width: 100%;
   max-width: 450px;
-  border-radius: 12px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 20px;
   padding: 40px;
   position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .close-btn {
@@ -1185,3 +1381,146 @@ select:focus, input:focus {
 .translate-x-full { transform: translateX(100%); }
 .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
 .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+
+/* Camicado Page */
+.camicado-page {
+  padding: 120px 0;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.camicado-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.camicado-card {
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  max-width: 900px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.camicado-logo-section {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  border-right: 1px solid #f5f5f5;
+}
+
+.camicado-logo {
+  max-width: 100%;
+  height: auto;
+  filter: grayscale(0.2);
+  transition: var(--transition);
+}
+
+.camicado-card:hover .camicado-logo {
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
+
+.camicado-info-section {
+  flex: 1.5;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.camicado-info-section .logo-text {
+  font-size: 3rem;
+  margin-bottom: 5px;
+  color: var(--text-main);
+}
+
+.camicado-info-section .subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.info-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.info-item .icon {
+  margin-top: 4px;
+  color: #c4122e; /* Camicado Red */
+}
+
+.info-item .label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.info-item .value {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.action-area {
+  margin-top: auto;
+}
+
+.action-area .btn-large {
+  padding: 18px 30px;
+  font-size: 1rem;
+  background: #c4122e;
+  border-color: #c4122e;
+}
+
+.action-area .btn-large:hover {
+  background: #a00e25;
+  border-color: #a00e25;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(196, 18, 46, 0.2);
+}
+
+.helper-text {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .camicado-card {
+    flex-direction: column;
+  }
+  .camicado-logo-section {
+    padding: 40px;
+    border-right: none;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .camicado-info-section {
+    padding: 40px 30px;
+  }
+  .camicado-info-section .logo-text {
+    font-size: 2.5rem;
+  }
+}

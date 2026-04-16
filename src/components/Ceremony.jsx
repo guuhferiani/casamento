@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, Calendar } from 'lucide-react';
+import { MapPin, Clock, Calendar, Shirt } from 'lucide-react';
 
 const Ceremony = () => {
   return (
@@ -16,20 +16,26 @@ const Ceremony = () => {
               <img src="/images/hall.png" alt="Local da Cerimônia" />
             </div>
             <div className="card-content">
-              <h3>Salão de Festas</h3>
               <div className="info-list">
                 <div className="info-item">
                   <Calendar className="icon" />
                   <div>
                     <strong>Data</strong>
-                    <p>06 de Junho de 2026</p>
+                    <p>06.06.2026</p>
                   </div>
                 </div>
                 <div className="info-item">
                   <Clock className="icon" />
                   <div>
                     <strong>Horário</strong>
-                    <p>19:00 - Recepção</p>
+                    <p>13h</p>
+                  </div>
+                </div>
+                <div className="info-item">
+                  <Shirt className="icon" />
+                  <div>
+                    <strong>Traje</strong>
+                    <p>Esporte fino <br /> Vista-se para a ocasião, mas priorize seu conforto</p>
                   </div>
                 </div>
                 <div className="info-item">
@@ -37,9 +43,10 @@ const Ceremony = () => {
                   <div>
                     <strong>Local</strong>
                     <p>R. Elói Cerqueira, 287 - Belém, São Paulo - SP</p>
-                    <a 
-                      href="https://www.google.com/maps/search/?api=1&query=R.+Elói+Cerqueira,+287+-+Belem,+São+Paulo+-+SP" 
-                      target="_blank" 
+                    <p>Salão de Festas</p>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=R.+Elói+Cerqueira,+287+-+Belem,+São+Paulo+-+SP"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="map-link"
                     >

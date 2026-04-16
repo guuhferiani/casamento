@@ -52,7 +52,7 @@ const Story = () => {
               </div>
               <h3 className="geo-names">
                 <span>Gustavo</span>
-                <span>& Michele</span>
+                <span>♥ Michele</span>
               </h3>
               <p className="geo-description">
                 Hoje, estamos prontos para dizer o "sim" mais importante das nossas vidas. 
