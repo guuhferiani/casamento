@@ -31,10 +31,9 @@ const Gifts = () => {
   }, [showModal]);
 
   const categories = ['Todos', 'Lua de Mel', 'Vida de Casado', 'Pets', 'Poupança'];
-  const giftsData = [
-    // Lua de Mel
-    { id: 1, name: 'Cota de Lua de Mel', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon.png' },
-    { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon.png' },
+  const giftsData = [    // Lua de Mel
+    { id: 1, name: 'Cota de Lua de Mel', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon-fun.png' },
+    { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon-cat.png' },
     { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
     { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: '/images/gifts/dinner.png' },
@@ -72,12 +71,11 @@ const Gifts = () => {
     { id: 34, name: 'Ajude a engordar nosso porquinho', price: 295.59, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
     { id: 35, name: 'Cofrinho dos noivos', price: 593.16, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
     { id: 36, name: 'Cofre novo para guardar as economias', price: 143.36, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
-    { id: 37, name: 'Vale Presente', price: 593.16, category: 'Poupança', image: '/images/gifts/shopping.png' },
-
-    { id: 39, name: 'Vale-presente Especial', price: 215.47, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
-    { id: 40, name: 'Vale-presente Solidário', price: 204.02, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
-    { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/shopping.png' },
-    { id: 42, name: 'Vale-presente Amigo', price: 192.58, category: 'Poupança', image: '/images/gifts/shopping.png' },
+    { id: 37, name: 'Vale Presente', price: 593.16, category: 'Poupança', image: '/images/gifts/voucher-fun.png' },
+    { id: 39, name: 'Vale-presente Especial', price: 215.47, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/voucher-meme.png' },
+    { id: 40, name: 'Vale-presente Solidário', price: 204.02, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/help-groom.png' },
+    { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/voucher-fun.png' },
+    { id: 42, name: 'Vale-presente Amigo', price: 192.58, category: 'Poupança', image: '/images/gifts/voucher-meme.png' },
     { id: 44, name: 'Cota para nosso Chá de Porquinho Virtual', price: 364.26, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
   ];
 
