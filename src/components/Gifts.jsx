@@ -41,7 +41,6 @@ const Gifts = () => {
     { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=600&auto=format&fit=crop' },
     { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/diving.png' },
     { id: 11, name: 'Passeio de lancha', price: 462.69, category: 'Lua de Mel', image: '/images/gifts/boat.png' },
-    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/party-cat.jpg' },
     { id: 13, name: 'Drink de boas vindas ao Hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 14, name: 'Drinks no bar do hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 15, name: 'Café da manhã no hotel pós noite de núpcias', price: 249.80, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
