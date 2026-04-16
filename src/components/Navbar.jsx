@@ -230,7 +230,7 @@ const Navbar = () => {
         }`}
       >
         <button
-          className="absolute top-8 right-8"
+          className="absolute top-8 right-8 close-btn"
           onClick={() => {
             setIsOpen(false);
             setMobileSubmenu(null);

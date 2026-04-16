@@ -249,13 +249,11 @@ nav .container {
   overflow-y: auto;
 }
 
+
+
+
 .mobile-menu a,
-.mobile-menu button {
-  width: 100%;
-}
-
-
-.mobile-menu a {
+.mobile-menu button:not(.close-btn):not(.btn) {
   font-family: var(--font-serif);
   font-size: 1.5rem;
   letter-spacing: 3px;
@@ -264,14 +262,21 @@ nav .container {
   padding: 15px 0;
   border-bottom: 1px solid #eee;
   transition: var(--transition);
-}
-
-.mobile-menu button {
   background: none;
   border: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   cursor: pointer;
-  color: var(--text-main);
 }
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+
 
 .mobile-menu a:last-of-type {
   border-bottom: none;
