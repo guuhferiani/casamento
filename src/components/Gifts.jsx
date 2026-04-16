@@ -31,7 +31,7 @@ const Gifts = () => {
   }, [showModal]);
 
   const categories = ['Todos', 'Lua de Mel', 'Vida de Casado', 'Pets', 'Poupança'];
-  const giftsData = [    // Lua de Mel
+  const giftsData = [    // Lua de Mel    // Lua de Mel
     { id: 1, name: 'Cota de Lua de Mel', price: 478.71, category: 'Lua de Mel', image: '/images/gifts/honeymoon-fun.png' },
     { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon-cat.png' },
     { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner-beach.png' },
@@ -39,15 +39,15 @@ const Gifts = () => {
     { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=600&auto=format&fit=crop' },
     { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=600&auto=format&fit=crop' },
     { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/diving.png' },
-    { id: 11, name: 'Passeio de lancha', price: '/images/gifts/boat.png' || 462.69, category: 'Lua de Mel', image: '/images/gifts/boat.png' },
-    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/1543793/pexels-photo-1543793.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { id: 11, name: 'Passeio de lancha', price: 462.69, category: 'Lua de Mel', image: '/images/gifts/boat.png' },
+    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1513245533132-aa7fad46d3c0?q=80&w=600&auto=format&fit=crop' },
     { id: 13, name: 'Drink de boas vindas ao Hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 14, name: 'Drinks no bar do hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 15, name: 'Café da manhã no hotel pós noite de núpcias', price: 249.80, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
-    { id: 16, name: 'Café da manhã servido no quarto', price: 326.49, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=600&auto=format&fit=crop' },
+    { id: 16, name: 'Café da manhã servido no quarto', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
     { id: 17, name: 'Champagne com cesta de frutas para a noite de núpcias', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/champagne.png' },
     { id: 18, name: 'Tarde de spa para os noivos relaxarem', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
-    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?q=80&w=600&auto=format&fit=crop' },
     { id: 20, name: 'Massagem relaxante para o casal', price: 539.37, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
     
     // Vida de Casado
@@ -57,9 +57,9 @@ const Gifts = () => {
     { id: 24, name: 'Remedinho para ressaca do noivo', price: 97.58, category: 'Vida de Casado', image: '/images/gifts/hangover.png' },
     { id: 25, name: 'Balança para os noivos não engordarem após o casamento', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/scale.png' },
     { id: 26, name: 'Um bom vinho para um final de tarde', price: 220.05, category: 'Vida de Casado', image: '/images/gifts/wine.png' },
-    { id: 27, name: 'Ajuda com o excesso de bagagem', price: 174.27, category: 'Vida de Casado', image: 'https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=600' },
-    { id: 28, name: 'Ida às compras no centro da cidade', price: 783.15, category: 'Vida de Casado', image: 'https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=600' },
-    { id: 29, name: 'Comprar lembrancinhas para a família e amigos', price: 326.49, category: 'Vida de Casado', image: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=600&auto=format&fit=crop' },
+    { id: 27, name: 'Ajuda com o excesso de bagagem', price: 174.27, category: 'Vida de Casado', image: 'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=600&auto=format&fit=crop' },
+    { id: 28, name: 'Ida às compras no centro da cidade', price: 783.15, category: 'Vida de Casado', image: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=600&auto=format&fit=crop' },
+    { id: 29, name: 'Comprar lembrancinhas para a família e amigos', price: 326.49, category: 'Vida de Casado', image: '/images/gifts/shopping.png' },
     
     // Pets
     { id: 30, name: 'Arranhador para gatos', price: 128.49, category: 'Pets', image: '/images/gifts/cat-accessories.png' },
@@ -73,7 +73,6 @@ const Gifts = () => {
     { id: 36, name: 'Cofre novo para guardar as economias', price: 143.36, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
     { id: 37, name: 'Vale Presente', price: 593.16, category: 'Poupança', image: '/images/gifts/voucher-fun.png' },
     { id: 39, name: 'Vale-presente Especial', price: 215.47, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/voucher-meme.png' },
-
     { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/voucher-fun.png' },
     { id: 42, name: 'Vale-presente Amigo', price: 192.58, category: 'Poupança', image: '/images/gifts/voucher-meme.png' },
     { id: 44, name: 'Cota para nosso Chá de Porquinho Virtual', price: 364.26, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
