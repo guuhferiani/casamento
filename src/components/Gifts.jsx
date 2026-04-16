@@ -36,18 +36,18 @@ const Gifts = () => {
     { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon-cat.png' },
     { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner-beach.png' },
     { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner-romantic.png' },
-    { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop' },
+    { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/45201/kitty-cat-baby-at-the-age-of-45201.jpeg?auto=compress&cs=tinysrgb&w=600' },
     { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=600&auto=format&fit=crop' },
     { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/diving.png' },
     { id: 11, name: 'Passeio de lancha', price: '/images/gifts/boat.png' || 462.69, category: 'Lua de Mel', image: '/images/gifts/boat.png' },
-    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1514525253361-bee8d48723ba?q=80&w=600&auto=format&fit=crop' },
+    { id: 12, name: 'Curtir uma noite de balada', price: 630.93, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/1543793/pexels-photo-1543793.jpeg?auto=compress&cs=tinysrgb&w=600' },
     { id: 13, name: 'Drink de boas vindas ao Hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 14, name: 'Drinks no bar do hotel', price: 174.27, category: 'Lua de Mel', image: '/images/gifts/nightlife.png' },
     { id: 15, name: 'Café da manhã no hotel pós noite de núpcias', price: 249.80, category: 'Lua de Mel', image: '/images/gifts/breakfast.png' },
     { id: 16, name: 'Café da manhã servido no quarto', price: 326.49, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=600&auto=format&fit=crop' },
     { id: 17, name: 'Champagne com cesta de frutas para a noite de núpcias', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/champagne.png' },
     { id: 18, name: 'Tarde de spa para os noivos relaxarem', price: 630.93, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
-    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecee?q=80&w=600&auto=format&fit=crop' },
+    { id: 19, name: 'Dia de beleza para os noivos', price: 478.71, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&w=600' },
     { id: 20, name: 'Massagem relaxante para o casal', price: 539.37, category: 'Lua de Mel', image: '/images/gifts/spa.png' },
     
     // Vida de Casado
@@ -57,8 +57,8 @@ const Gifts = () => {
     { id: 24, name: 'Remedinho para ressaca do noivo', price: 97.58, category: 'Vida de Casado', image: '/images/gifts/hangover.png' },
     { id: 25, name: 'Balança para os noivos não engordarem após o casamento', price: 112.46, category: 'Vida de Casado', image: '/images/gifts/scale.png' },
     { id: 26, name: 'Um bom vinho para um final de tarde', price: 220.05, category: 'Vida de Casado', image: '/images/gifts/wine.png' },
-    { id: 27, name: 'Ajuda com o excesso de bagagem', price: 174.27, category: 'Vida de Casado', image: 'https://images.unsplash.com/photo-1581553680321-4ff6696fa8d2?q=80&w=600&auto=format&fit=crop' },
-    { id: 28, name: 'Ida às compras no centro da cidade', price: 783.15, category: 'Vida de Casado', image: 'https://images.unsplash.com/photo-1601924921557-45e6ecd0a0e7?q=80&w=600&auto=format&fit=crop' },
+    { id: 27, name: 'Ajuda com o excesso de bagagem', price: 174.27, category: 'Vida de Casado', image: 'https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { id: 28, name: 'Ida às compras no centro da cidade', price: 783.15, category: 'Vida de Casado', image: 'https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=600' },
     { id: 29, name: 'Comprar lembrancinhas para a família e amigos', price: 326.49, category: 'Vida de Casado', image: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=600&auto=format&fit=crop' },
     
     // Pets
