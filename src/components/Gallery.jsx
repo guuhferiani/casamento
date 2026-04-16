@@ -57,22 +57,23 @@ const Gallery = () => {
           <div className="section-title">
             <p>Para Sempre</p>
             <h2 className="logo-text">Nossa Galeria</h2>
-            <p className="description">Momentos especiais do nosso ensaio Pre Wedding, capturando a essência do nosso amor.</p>
+            <p className="description">Depois de tantos passos lindos juntos, decidimos seguir o mesmo caminho para todo sempre!</p>
+            <p className="description">Queremos celebrar essa união com as pessoas que mais amamos, cercados de bons brindes, muitos sorrisos e energia positiva.</p>
           </div>
         </header>
 
         <div className="masonry-grid">
           {images.map((img) => (
-            <div 
-              key={img.id} 
+            <div
+              key={img.id}
               className="masonry-item"
               onClick={() => setSelectedImage(img)}
             >
-              <img 
-                src={img.url} 
-                alt={img.alt} 
-                loading="lazy" 
-                onError={() => handleImageError(img.id)} 
+              <img
+                src={img.url}
+                alt={img.alt}
+                loading="lazy"
+                onError={() => handleImageError(img.id)}
               />
               <div className="item-overlay">
                 <ZoomIn size={32} color="white" />
@@ -89,22 +90,22 @@ const Gallery = () => {
             <button className="close-btn" onClick={() => setSelectedImage(null)}>
               <X size={32} />
             </button>
-            
+
             <button className="nav-btn prev" onClick={handlePrev}>
               <ChevronLeft size={48} />
             </button>
-            
-            <img 
-              src={selectedImage.url} 
-              alt={selectedImage.alt} 
+
+            <img
+              src={selectedImage.url}
+              alt={selectedImage.alt}
               key={selectedImage.id}
               className="animate-fade-in"
             />
-            
+
             <button className="nav-btn next" onClick={handleNext}>
               <ChevronRight size={48} />
             </button>
-            
+
             <div className="image-counter">
               {images.findIndex(img => img.id === selectedImage.id) + 1} / {images.length}
             </div>

@@ -1,7 +1,41 @@
-import React from 'react';
-import { Heart } from 'lucide-react';
+import React, { useState } from 'react';
+import { Heart, X, MessageSquare, Send, CheckCircle2, Loader2 } from 'lucide-react';
+import { supabase } from '../lib/supabaseClient';
 
 const Story = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [nome, setNome] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!nome || !mensagem) return;
+
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('mensagens_noivos')
+        .insert([{ nome, mensagem }]);
+
+      if (error) throw error;
+      
+      setSubmitted(true);
+      setNome('');
+      setMensagem('');
+    } catch (error) {
+      alert('Erro ao enviar mensagem: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSubmitted(false);
+  };
+
   return (
     <section id="story" className="story">
       {/* Background Organic Elements */}
@@ -29,7 +63,6 @@ const Story = () => {
               <img src="/images/G_M-187.webp" alt="O Início" />
             </div>
             <div className="story-text">
-              <h3>Como tudo começou</h3>
               <p>
                 Nossa jornada começou de forma inesperada, mas desde o primeiro momento soubemos que havia algo especial. 
                 Entre conversas intermináveis e sorrisos compartilhados, fomos construindo uma base sólida de amizade, 
@@ -74,11 +107,68 @@ const Story = () => {
         </div>
 
         <div className="message-btn-container mt-10 text-center relative z-10">
-          <button className="btn btn-outline" onClick={() => alert('Em breve funcionalidade de mensagens!')}>
+          <button className="btn btn-outline" onClick={() => setShowModal(true)}>
             Deixe uma mensagem para os noivos
           </button>
         </div>
       </div>
+
+      {/* Message Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeModal}><X /></button>
+            
+            {!submitted ? (
+              <>
+                <div className="modal-header">
+                  <MessageSquare className="w-12 h-12 text-primary mx-auto mb-4" />
+                  <h3>Deixe sua Mensagem</h3>
+                  <p>Escreva palavras de carinho para o nosso novo capítulo juntos.</p>
+                </div>
+
+                <form className="modal-content mt-6 space-y-4" onSubmit={handleSubmit}>
+                  <div className="form-group text-left">
+                    <label className="block text-sm font-medium mb-1 uppercase tracking-widest text-xs">Seu Nome</label>
+                    <input 
+                      type="text" 
+                      className="form-input"
+                      placeholder="Ex: João e Maria"
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="form-group text-left">
+                    <label className="block text-sm font-medium mb-1 uppercase tracking-widest text-xs">Mensagem</label>
+                    <textarea 
+                      className="form-input"
+                      placeholder="Deseje algo especial..."
+                      value={mensagem}
+                      onChange={(e) => setMensagem(e.target.value)}
+                      required
+                    ></textarea>
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="btn w-full flex items-center justify-center gap-2"
+                    disabled={loading}
+                  >
+                    {loading ? <Loader2 className="animate-spin" size={20} /> : <><Send size={18} /> Enviar Mensagem</>}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="text-center py-8 animate-fade-in">
+                <CheckCircle2 size={60} className="text-green-500 mx-auto mb-4" />
+                <h3 className="text-2xl font-serif mb-2">Mensagem Enviada!</h3>
+                <p className="text-muted mb-8">Obrigado pelo carinho. Sua mensagem foi guardada em nossos corações.</p>
+                <button className="btn w-full" onClick={closeModal}>Fechar</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

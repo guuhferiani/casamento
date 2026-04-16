@@ -87,7 +87,6 @@ const RSVP = () => {
       <div className="container">
         <div className="rsvp-card">
           <div className="section-title">
-            <p>Confirmar Presença</p>
             <h2>Confirme sua Presença</h2>
             <p className="mt-2 text-sm">Por favor, confirme até o dia 01/05/2026</p>
           </div>
