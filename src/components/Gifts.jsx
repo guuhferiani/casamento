@@ -73,7 +73,7 @@ const Gifts = () => {
     { id: 36, name: 'Cofre novo para guardar as economias', price: 143.36, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/piggy-bank.png' },
     { id: 37, name: 'Vale Presente', price: 593.16, category: 'Poupança', image: '/images/gifts/voucher-fun.png' },
     { id: 39, name: 'Vale-presente Especial', price: 215.47, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/voucher-meme.png' },
-    { id: 40, name: 'Vale-presente Solidário', price: 204.02, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/help-groom.png' },
+
     { id: 41, name: 'Vale-presente Familiar', price: 181.13, category: 'Poupança', isCota: true, shares: 5, image: '/images/gifts/voucher-fun.png' },
     { id: 42, name: 'Vale-presente Amigo', price: 192.58, category: 'Poupança', image: '/images/gifts/voucher-meme.png' },
     { id: 44, name: 'Cota para nosso Chá de Porquinho Virtual', price: 364.26, category: 'Poupança', image: '/images/gifts/piggy-bank.png' },
