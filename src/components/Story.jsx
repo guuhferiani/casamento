@@ -25,7 +25,7 @@ const Story = () => {
         <div className="story-part">
           <div className="story-content">
             <div className="story-image animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <img src="/images/couple.png" alt="O Início" />
+              <img src="/images/G_M-187.webp" alt="O Início" />
             </div>
             <div className="story-text">
               <h3>Como tudo começou</h3>
@@ -65,7 +65,7 @@ const Story = () => {
             <div className="geo-image-container animate-fade-in" style={{ animationDelay: '0.4s' }}>
               <div className="geo-bg-block block-light"></div>
               <div className="geo-bg-block block-gray"></div>
-              <img src="/images/couple.png" alt="Gustavo e Michele" className="geo-photo" />
+              <img src="/images/G_M-57.webp" alt="Gustavo e Michele" className="geo-photo" />
             </div>
           </div>
         </div>

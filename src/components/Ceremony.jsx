@@ -13,7 +13,7 @@ const Ceremony = () => {
         <div className="ceremony-container">
           <div className="ceremony-card">
             <div className="card-image">
-              <img src="/images/hall.png" alt="Local da Cerimônia" />
+              <img src="/images/G_M-133.webp" alt="Local da Cerimônia" />
             </div>
             <div className="card-content">
               <div className="info-list">

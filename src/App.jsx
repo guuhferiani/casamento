@@ -38,7 +38,7 @@ function App() {
             <p className="logo-text">G ♥ M</p>
             <p className="date">06.06.2026</p>
             <div className="divider"></div>
-            <p className="made-with">Feito com carinho para o nosso grande dia</p>
+            <p className="made-with">Feito por nós com carinho para o nosso grande dia</p>
           </div>
         </footer>
       </div>
