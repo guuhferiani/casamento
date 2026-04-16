@@ -36,7 +36,7 @@ const Gifts = () => {
     { id: 3, name: 'Cotas de lua de mel!', price: 364.26, category: 'Lua de Mel', isCota: true, shares: 5, image: '/images/gifts/honeymoon-cat.png' },
     { id: 6, name: 'Jantar especial na praia', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/dinner-beach.png' },
     { id: 7, name: 'Jantar romântico', price: 326.49, category: 'Lua de Mel', image: '/images/gifts/dinner-romantic.png' },
-    { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/45201/kitty-cat-baby-at-the-age-of-45201.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { id: 8, name: 'Jantar temático italiano', price: 447.81, category: 'Lua de Mel', image: 'https://images.pexels.com/photos/2012391/pexels-photo-2012391.jpeg?auto=compress&cs=tinysrgb&w=600' },
     { id: 9, name: 'Jantar temático japonês', price: 402.03, category: 'Lua de Mel', image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=600&auto=format&fit=crop' },
     { id: 10, name: 'Mergulho subaquático', price: 554.25, category: 'Lua de Mel', image: '/images/gifts/diving.png' },
     { id: 11, name: 'Passeio de lancha', price: '/images/gifts/boat.png' || 462.69, category: 'Lua de Mel', image: '/images/gifts/boat.png' },
