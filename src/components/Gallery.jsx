@@ -4,19 +4,16 @@ import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [allIds] = useState(Array.from({ length: 185 }, (_, i) => i + 3));
-  const [validImages, setValidImages] = useState([]);
-
-  const handleImageError = (id) => {
-    setValidImages(prev => prev.filter(imgId => imgId !== id));
-  };
+  
+  // Lista exata de IDs das fotos que existem na pasta /public/images/
+  // Isso evita 404s desnecessários e melhora muito a performance online
+  const validIds = [3, 16, 21, 29, 36, 49, 57, 83, 133, 162, 172, 178, 187, 206];
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setValidImages(allIds);
   }, []);
 
-  const images = validImages.map(id => ({
+  const images = validIds.map(id => ({
     id,
     url: `/images/G_M-${id}.webp`,
     alt: `Pré Wedding Gustavo e Michele ${id}`
@@ -73,7 +70,6 @@ const Gallery = () => {
                 src={img.url}
                 alt={img.alt}
                 loading="lazy"
-                onError={() => handleImageError(img.id)}
               />
               <div className="item-overlay">
                 <ZoomIn size={32} color="white" />
