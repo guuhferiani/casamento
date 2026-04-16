@@ -1793,6 +1793,7 @@ input:focus {
 }
 .heart-icon { display: inline-block; vertical-align: middle; fill: currentColor; stroke: none; margin: 0 4px; }
 .heart-icon.text-black { fill: black; }
+.heart-icon.text-white { fill: white; }
 
 /* Gallery Page */
 .gallery-page { padding: 120px 0; background: #fff; min-height: 100vh; }

@@ -27,9 +27,8 @@ const Hero = () => {
     <section id="home" className="hero">
       <div className="hero-overlay"></div>
       <div className="hero-content container">
-        <p className="subtitle animate-fade-in" style={{ animationDelay: '0.2s' }}>Vamos nos casar!</p>
         <h1 className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          Gustavo <Heart className="heart-icon text-black" size={40} /> Michele
+          Gustavo <Heart className="heart-icon text-white" size={50} /> Michele
         </h1>
         <div className="countdown animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <div className="time-box">
