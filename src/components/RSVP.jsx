@@ -10,6 +10,7 @@ const RSVP = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  const [isAlreadyConfirmed, setIsAlreadyConfirmed] = useState(false);
   
   const searchRef = useRef(null);
 
@@ -30,8 +31,7 @@ const RSVP = () => {
     try {
       const { data, error } = await supabase
         .from('convidados')
-        .select('id, nome_na_lista')
-        .eq('confirmado', false)
+        .select('id, nome_na_lista, confirmado')
         .order('nome_na_lista', { ascending: true });
 
       if (error) throw error;
@@ -53,6 +53,7 @@ const RSVP = () => {
     setSelectedGuest(guest);
     setSearchTerm(guest.nome_na_lista);
     setShowSuggestions(false);
+    setIsAlreadyConfirmed(guest.confirmado);
   };
 
   const handleSubmit = async (e) => {
@@ -105,6 +106,7 @@ const RSVP = () => {
                         setSearchTerm(e.target.value);
                         setShowSuggestions(true);
                         setSelectedGuest(null); // Reset selection if typing
+                        setIsAlreadyConfirmed(false);
                       }}
                       onFocus={() => setShowSuggestions(true)}
                       autoComplete="off"
@@ -118,10 +120,13 @@ const RSVP = () => {
                         filteredGuests.map((guest) => (
                           <div 
                             key={guest.id} 
-                            className="suggestion-item"
+                            className={`suggestion-item flex items-center justify-between ${guest.confirmado ? 'text-muted italic' : ''}`}
                             onClick={() => handleSelect(guest)}
                           >
-                            {guest.nome_na_lista}
+                            <span>{guest.nome_na_lista}</span>
+                            {guest.confirmado && (
+                              <span className="suggestion-badge">Confirmado</span>
+                            )}
                           </div>
                         ))
                       ) : (
@@ -131,9 +136,15 @@ const RSVP = () => {
                   )}
                 </div>
                 <p className="text-xs text-muted mt-2 italic">Dica: Digite pelo menos 2 letras para buscar.</p>
+                
+                {isAlreadyConfirmed && (
+                  <div className="rsvp-validator">
+                    <strong>Aviso:</strong> Este nome já confirmou presença! Se você deseja confirmar outro nome, continue buscando na lista.
+                  </div>
+                )}
               </div>
 
-              <button type="submit" className="btn w-full" disabled={loading || !selectedGuest}>
+              <button type="submit" className="btn w-full" disabled={loading || !selectedGuest || isAlreadyConfirmed}>
                 {loading ? <Loader2 className="animate-spin inline mr-2" /> : 'Confirmar Presença'}
               </button>
             </form>

@@ -1347,6 +1347,50 @@ input {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+.suggestion-item.flex {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.bg-orange-50 {
+  background-color: #fffaf0;
+}
+
+.border-orange-200 {
+  border-color: #feebc8;
+}
+
+.text-orange-800 {
+  color: #c05621;
+}
+
+.suggestion-badge {
+  font-size: 10px;
+  background-color: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  font-weight: 600;
+}
+
+.rsvp-validator {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fffaf0;
+  border: 1px solid #feebc8;
+  border-radius: 8px;
+  color: #c05621;
+  font-size: 0.875rem;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
 .suggestion-item {
   padding: 12px 15px;
   cursor: pointer;
