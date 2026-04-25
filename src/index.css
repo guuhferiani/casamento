@@ -817,6 +817,16 @@ nav .container {
   font-size: 0.95rem;
 }
 
+.location-name {
+  color: var(--primary) !important;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.location-address {
+  line-height: 1.4 !important;
+}
+
 .map-link {
   color: var(--primary);
   font-size: 0.85rem;

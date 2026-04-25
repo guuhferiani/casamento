@@ -42,8 +42,11 @@ const Ceremony = () => {
                   <MapPin className="icon" />
                   <div>
                     <strong>Local</strong>
-                    <p>R. Elói Cerqueira, 287 - Belém, São Paulo - SP</p>
-                    <p>Salão de Festas</p>
+                    <p className="location-name">Salão de Festas Max Belém</p>
+                    <p className="location-address">
+                      R. Elói Cerqueira, 287 <br />
+                      Belém, São Paulo - SP
+                    </p>
                     <a
                       href="https://www.google.com/maps/search/?api=1&query=R.+Elói+Cerqueira,+287+-+Belem,+São+Paulo+-+SP"
                       target="_blank"
