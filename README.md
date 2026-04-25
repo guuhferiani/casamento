@@ -1,16 +1,52 @@
-# React + Vite
+# Gustavo & Michele - Casamento 06.06.2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Site oficial do casamento de Gustavo e Michele, desenvolvido para facilitar a comunicação com os convidados, gerenciar confirmações de presença (RSVP) e compartilhar informações importantes sobre o grande dia.
 
-Currently, two official plugins are available:
+![Preview do Site](./public/images/preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologias
 
-## React Compiler
+Este projeto foi construído com tecnologias modernas para garantir uma experiência premium e responsiva:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React** + **Vite**
+- **Lucide React** (Ícones)
+- **CSS3** (Design personalizado e responsivo)
+- **Supabase** (Banco de dados e autenticação)
+- **Vercel** (Deploy)
 
-## Expanding the ESLint configuration
+## ✨ Funcionalidades
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Contagem Regressiva**: Acompanhamento em tempo real para o grande dia.
+- **Nossa História**: Seção dedicada à jornada do casal.
+- **Cerimônia e Recepção**: Informações detalhadas sobre local, horário e traje.
+- **Galeria de Fotos**: Espaço para compartilhar momentos especiais.
+- **Lista de Presentes**: Integração com mimos e contribuições via PIX.
+- **RSVP (Confirmação de Presença)**: Sistema de confirmação integrado ao banco de dados.
+
+## 📍 Localização
+
+O evento será realizado no **Max Belém** (Salão de Festas do Condomínio).
+Endereço: R. Elói Cerqueira, 287 - Belém, São Paulo - SP.
+
+## 🛠️ Instalação e Uso
+
+Para rodar o projeto localmente:
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/guuhferiani/casamento.git
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+Desenvolvido com ❤️ para um dia inesquecível.
