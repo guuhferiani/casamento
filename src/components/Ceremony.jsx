@@ -42,7 +42,8 @@ const Ceremony = () => {
                   <MapPin className="icon" />
                   <div>
                     <strong>Local</strong>
-                    <p className="location-name">Salão de Festas Max Belém</p>
+                    <p className="location-name">Max Belém</p>
+                    <p className="location-type">Salão de Festas (Condomínio)</p>
                     <p className="location-address">
                       R. Elói Cerqueira, 287 <br />
                       Belém, São Paulo - SP
