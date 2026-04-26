@@ -10,6 +10,7 @@ import Gifts from './components/Gifts';
 import ListaPresentes from './components/ListaPresentes';
 import Gallery from './components/Gallery';
 import Messages from './components/Messages';
+import GuestManagement from './components/GuestManagement';
 import BackToTop from './components/BackToTop';
 
 const Home = () => (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/lista-presentes" element={<ListaPresentes />} />
             <Route path="/galeria" element={<Gallery />} />
             <Route path="/mensagens" element={<Messages />} />
+            <Route path="/gestao-convidados" element={<GuestManagement />} />
           </Routes>
         </main>
         
