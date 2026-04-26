@@ -7,7 +7,7 @@ import Story from './components/Story';
 import Ceremony from './components/Ceremony';
 import RSVP from './components/RSVP';
 import Gifts from './components/Gifts';
-import Camicado from './components/Camicado';
+import ListaPresentes from './components/ListaPresentes';
 import Gallery from './components/Gallery';
 import Messages from './components/Messages';
 import BackToTop from './components/BackToTop';
@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/lista-de-mimos" element={<Gifts />} />
-            <Route path="/lista-camicado" element={<Camicado />} />
+            <Route path="/lista-presentes" element={<ListaPresentes />} />
             <Route path="/galeria" element={<Gallery />} />
             <Route path="/mensagens" element={<Messages />} />
           </Routes>

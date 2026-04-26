@@ -59,7 +59,7 @@ const Navbar = () => {
       href: '#',
       submenu: [
         { name: 'Lista de Mimos', href: '/lista-de-mimos', isInternal: true },
-        { name: 'Lista Camicado', href: '/lista-camicado', isInternal: true }
+        { name: 'Lista de Presentes', href: '/lista-presentes', isInternal: true }
       ]
     },
     { name: 'Confirmar Presença', href: '#rsvp', isButton: true },

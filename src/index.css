@@ -1714,11 +1714,25 @@ input:focus {
   min-height: 100vh;
 }
 
+.camicado-page .page-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.camicado-page .section-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  margin-top: 20px;
+  color: var(--text-main);
+}
+
 .camicado-card-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 40px;
+  gap: 40px;
 }
 
 .camicado-card {
