@@ -81,13 +81,12 @@ const GuestManagement = () => {
     doc.text(`Gerado em: ${date} | Total de Confirmados: ${guests.length}`, 14, 30);
     
     // Define table columns and data
-    const tableColumn = ["Nome na Lista", "WhatsApp", "Confirmado em"];
+    const tableColumn = ["Nome na Lista", "Data da Confirmação"];
     const tableRows = [];
 
     guests.forEach(guest => {
       const guestData = [
         guest.nome_na_lista,
-        guest.whatsapp || 'Não informado',
         new Date(guest.created_at).toLocaleDateString('pt-BR')
       ];
       tableRows.push(guestData);
@@ -183,7 +182,6 @@ const GuestManagement = () => {
                   <thead className="bg-gray-50 border-b border-gray-100">
                     <tr>
                       <th className="px-8 py-4 text-xs uppercase tracking-widest font-semibold text-text-muted">Convidado</th>
-                      <th className="px-8 py-4 text-xs uppercase tracking-widest font-semibold text-text-muted">WhatsApp</th>
                       <th className="px-8 py-4 text-xs uppercase tracking-widest font-semibold text-text-muted">Data da Confirmação</th>
                     </tr>
                   </thead>
@@ -196,9 +194,6 @@ const GuestManagement = () => {
                       >
                         <td className="px-8 py-5">
                           <span className="font-medium text-text-main">{guest.nome_na_lista}</span>
-                        </td>
-                        <td className="px-8 py-5">
-                          <span className="text-text-muted">{guest.whatsapp || '---'}</span>
                         </td>
                         <td className="px-8 py-5">
                           <div className="flex items-center gap-2 text-text-muted text-sm">
