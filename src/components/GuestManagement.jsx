@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Search, FileDown, ArrowLeft, Loader2, CheckCircle, Clock } from 'lucide-react';
+import { Users, Search, FileDown, ArrowLeft, Loader2, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { jsPDF } from 'jspdf';
+import { autoTable } from 'jspdf-autotable';
 
 const GuestManagement = () => {
   const [guests, setGuests] = useState([]);
@@ -67,43 +67,47 @@ const GuestManagement = () => {
   );
 
   const exportToPDF = () => {
-    const doc = new jsPDF();
-    
-    // Add title
-    doc.setFontSize(20);
-    doc.setTextColor(26, 26, 26);
-    doc.text('Lista de Convidados Confirmados', 14, 22);
-    
-    // Add date and total
-    doc.setFontSize(11);
-    doc.setTextColor(100, 100, 100);
-    const date = new Date().toLocaleDateString('pt-BR');
-    doc.text(`Gerado em: ${date} | Total de Confirmados: ${guests.length}`, 14, 30);
-    
-    // Define table columns and data
-    const tableColumn = ["Nome na Lista", "Data da Confirmação"];
-    const tableRows = [];
+    try {
+      const doc = new jsPDF();
+      
+      // Add title
+      doc.setFontSize(20);
+      doc.setTextColor(26, 26, 26);
+      doc.text('Lista de Convidados Confirmados', 14, 22);
+      
+      // Add date and total
+      doc.setFontSize(11);
+      doc.setTextColor(100, 100, 100);
+      const date = new Date().toLocaleDateString('pt-BR');
+      doc.text(`Gerado em: ${date} | Total de Confirmados: ${guests.length}`, 14, 30);
+      
+      // Define table columns and data
+      const tableColumn = ["Nome na Lista"];
+      const tableRows = [];
 
-    guests.forEach(guest => {
-      const guestData = [
-        guest.nome_na_lista,
-        new Date(guest.created_at).toLocaleDateString('pt-BR')
-      ];
-      tableRows.push(guestData);
-    });
+      guests.forEach(guest => {
+        const guestData = [
+          guest.nome_na_lista
+        ];
+        tableRows.push(guestData);
+      });
 
-    // Generate table
-    doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 40,
-      theme: 'striped',
-      headStyles: { fillColor: [196, 172, 142], textColor: [255, 255, 255] }, // Match primary color
-      styles: { fontSize: 10, cellPadding: 5 },
-    });
+      // Generate table
+      autoTable(doc, {
+        head: [tableColumn],
+        body: tableRows,
+        startY: 40,
+        theme: 'striped',
+        headStyles: { fillColor: [196, 172, 142], textColor: [255, 255, 255] }, // Match primary color
+        styles: { fontSize: 10, cellPadding: 5 },
+      });
 
-    // Save the PDF
-    doc.save(`lista_convidados_confirmados_${date.replace(/\//g, '-')}.pdf`);
+      // Save the PDF
+      doc.save(`lista_convidados_confirmados_${date.replace(/\//g, '-')}.pdf`);
+    } catch (error) {
+      console.error('Erro ao exportar PDF:', error);
+      alert('Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.');
+    }
   };
 
   return (
@@ -182,7 +186,6 @@ const GuestManagement = () => {
                   <thead className="bg-gray-50 border-b border-gray-100">
                     <tr>
                       <th className="px-8 py-4 text-xs uppercase tracking-widest font-semibold text-text-muted">Convidado</th>
-                      <th className="px-8 py-4 text-xs uppercase tracking-widest font-semibold text-text-muted">Data da Confirmação</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
@@ -194,12 +197,6 @@ const GuestManagement = () => {
                       >
                         <td className="px-8 py-5">
                           <span className="font-medium text-text-main">{guest.nome_na_lista}</span>
-                        </td>
-                        <td className="px-8 py-5">
-                          <div className="flex items-center gap-2 text-text-muted text-sm">
-                            <Clock size={14} />
-                            {new Date(guest.created_at).toLocaleDateString('pt-BR')}
-                          </div>
                         </td>
                       </tr>
                     ))}
