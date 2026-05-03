@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabaseClient';
 import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
 
+// Componente de Gestão de Convidados - Última atualização: 02/05/2026
 const GuestManagement = () => {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
