@@ -32,3 +32,4 @@ dist-ssr
 # Database & Scratch Files
 *.csv
 scratch_*.js
+.vercel
