@@ -58,7 +58,7 @@ const Ceremony = () => {
                         Google Maps
                       </a>
                       <a
-                        href="https://waze.com/ul?ll=-23.541464,-46.591645&navigate=yes"
+                        href="https://waze.com/ul?q=R.+Eloi+Cerqueira,+287+-+Belem,+Sao+Paulo+-+SP&navigate=yes"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="map-btn waze"
