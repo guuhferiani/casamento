@@ -65,7 +65,7 @@ const Ceremony = () => {
                       >
                         Waze
                       </a>
-                      <button 
+                      <button
                         onClick={() => {
                           const address = "R. Elói Cerqueira, 287 - Belém, São Paulo - SP";
                           navigator.clipboard.writeText(address);
