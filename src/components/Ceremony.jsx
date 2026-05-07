@@ -58,7 +58,7 @@ const Ceremony = () => {
                         Google Maps
                       </a>
                       <a
-                        href="https://waze.com/ul?ll=-23.541472,-46.591638&navigate=yes"
+                        href="https://waze.com/ul?ll=-23.5423995,-46.5920777&navigate=yes"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="map-btn waze"
