@@ -33,3 +33,4 @@ dist-ssr
 *.csv
 scratch_*.js
 .vercel
+.env*.local

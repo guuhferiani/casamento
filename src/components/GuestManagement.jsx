@@ -67,20 +67,46 @@ const GuestManagement = () => {
     guest.nome_na_lista.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Group guests by initial letter
+  const groupedGuests = filteredGuests.reduce((acc, guest) => {
+    const initial = guest.nome_na_lista.charAt(0).toUpperCase();
+    if (!acc[initial]) acc[initial] = [];
+    acc[initial].push(guest);
+    return acc;
+  }, {});
+
+  const sortedInitials = Object.keys(groupedGuests).sort();
+
   const exportToPDF = () => {
     try {
       const doc = new jsPDF();
       
-      // Add title
-      doc.setFontSize(20);
+      // --- PDF Identity Header ---
+      doc.setFont("times", "bold");
+      doc.setFontSize(26);
       doc.setTextColor(26, 26, 26);
-      doc.text('Lista de Convidados Confirmados', 14, 22);
+      doc.text('Gustavo & Michele', 105, 20, { align: 'center' });
       
-      // Add date and total
-      doc.setFontSize(11);
+      doc.setFont("times", "italic");
+      doc.setFontSize(14);
       doc.setTextColor(100, 100, 100);
+      doc.text('06 de Junho de 2026', 105, 28, { align: 'center' });
+      
+      // Decorative line
+      doc.setDrawColor(55, 65, 81); // Dark Gray
+      doc.setLineWidth(0.5);
+      doc.line(40, 32, 170, 32);
+
+      // Report Info
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.setTextColor(26, 26, 26);
+      doc.text('Lista de Convidados Confirmados', 14, 45);
+      
+      doc.setFontSize(10);
+      doc.setTextColor(120, 120, 120);
       const date = new Date().toLocaleDateString('pt-BR');
-      doc.text(`Gerado em: ${date} | Total de Confirmados: ${guests.length}`, 14, 30);
+      doc.text(`Relatório gerado em: ${date} | Total: ${guests.length} convidados`, 14, 52);
       
       // Define table columns and data
       const tableColumn = ["Nome na Lista"];
@@ -97,9 +123,9 @@ const GuestManagement = () => {
       autoTable(doc, {
         head: [tableColumn],
         body: tableRows,
-        startY: 40,
+        startY: 60,
         theme: 'striped',
-        headStyles: { fillColor: [196, 172, 142], textColor: [255, 255, 255] }, // Match primary color
+        headStyles: { fillColor: [55, 65, 81], textColor: [255, 255, 255] }, // Dark Gray
         styles: { fontSize: 10, cellPadding: 5 },
       });
 
@@ -140,64 +166,59 @@ const GuestManagement = () => {
 
         <div className="management-content animate-fade-in">
           {/* Stats and Actions */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
-            <div className="stats-card">
-              <div className="flex items-center gap-4">
-                <div className="icon-wrapper">
-                  <CheckCircle size={24} />
-                </div>
-                <div>
-                  <span className="text-sm text-text-muted uppercase tracking-widest">Total Confirmados</span>
-                  <p className="text-3xl font-serif font-bold">{guests.length}</p>
-                </div>
+          <div className="stats-container flex flex-col items-center">
+            <div className="stats-pill">
+              <div className="pill-icon">
+                <CheckCircle size={22} />
               </div>
-            </div>
-
-            <div className="actions-area flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-              <div className="search-bar relative flex-grow">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
-                <input 
-                  type="text" 
-                  placeholder="Buscar convidado..." 
-                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:border-primary outline-none transition-all"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+              <div className="pill-content">
+                <span className="pill-label">Total Confirmados</span>
+                <p className="pill-number">{guests.length}</p>
               </div>
-              <button 
-                className="btn flex items-center justify-center gap-2"
-                onClick={exportToPDF}
-                disabled={guests.length === 0}
-              >
-                <FileDown size={18} /> Exportar PDF
-              </button>
             </div>
           </div>
 
-          {/* Table Container */}
-          <div className="table-container bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+          <div className="actions-area flex flex-col md:flex-row justify-between items-center">
+            <div className="search-bar relative flex-grow max-w-2xl w-full">
+              <Search className="text-text-muted" size={18} />
+              <input 
+                type="text" 
+                placeholder="Buscar convidado..." 
+                className="w-full bg-white border border-gray-200 rounded-xl focus:border-primary outline-none transition-all shadow-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button 
+              className="btn flex items-center justify-center gap-3 px-8 py-4 shadow-md"
+              onClick={exportToPDF}
+              disabled={guests.length === 0}
+            >
+              <FileDown size={20} /> Exportar Lista (PDF)
+            </button>
+          </div>
+
+          <div className="list-container bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden">
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-20">
+              <div className="py-20 flex flex-col items-center">
                 <Loader2 className="animate-spin text-primary mb-4" size={40} />
                 <p className="text-text-muted font-serif italic">Carregando lista...</p>
               </div>
             ) : filteredGuests.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-gray-50 border-b border-gray-100">
+                <table className="management-table w-full text-left border-collapse">
+                  <thead>
                     <tr>
-                      <th className="px-8 py-4 text-xs uppercase tracking-widest font-semibold text-text-muted">Convidado</th>
+                      <th className="text-sm uppercase font-bold text-white">
+                        Nome na Lista
+                      </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
-                    {filteredGuests.map((guest, index) => (
-                      <tr 
-                        key={guest.id} 
-                        className="hover:bg-gray-50 transition-colors"
-                        style={{ animationDelay: `${index * 0.05}s` }}
-                      >
-                        <td className="px-8 py-5">
-                          <span className="font-medium text-text-main">{guest.nome_na_lista}</span>
+                  <tbody>
+                    {filteredGuests.map((guest) => (
+                      <tr key={guest.id} className="guest-row transition-colors">
+                        <td>
+                          <span className="font-medium text-text-main text-lg tracking-wide">{guest.nome_na_lista}</span>
                         </td>
                       </tr>
                     ))}
@@ -205,7 +226,7 @@ const GuestManagement = () => {
                 </table>
               </div>
             ) : (
-              <div className="text-center py-20">
+              <div className="py-20 text-center">
                 <Users size={60} className="text-gray-100 mx-auto mb-4" />
                 <p className="text-xl text-text-muted font-serif italic">
                   {searchTerm ? 'Nenhum convidado encontrado para esta busca.' : 'Nenhuma confirmação registrada até o momento.'}
@@ -221,39 +242,135 @@ const GuestManagement = () => {
           background-color: #fafafa;
         }
 
-        .stats-card {
-          background: white;
-          padding: 25px 40px;
-          border-radius: 12px;
-          border: 1px solid #eee;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-          width: 100%;
-          max-width: 300px;
+        .stats-container {
+          margin-bottom: 40px;
         }
 
-        .icon-wrapper {
-          width: 50px;
-          height: 50px;
+        .stats-pill {
+          background: white;
+          padding: 12px 35px 12px 12px;
+          border-radius: 100px;
+          border: 1px solid #f0f0f0;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          transition: all 0.3s ease;
+        }
+
+        .stats-pill:hover {
+          transform: scale(1.05);
+          box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+
+        .pill-icon {
+          width: 54px;
+          height: 54px;
           background: #f0ece6;
           color: var(--primary);
-          border-radius: 12px;
+          border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
-        .table-container {
-          animation: slideUp 0.6s ease-out;
+        .pill-content {
+          display: flex;
+          flex-direction: column;
         }
 
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
+        .pill-label {
+          font-size: 0.65rem;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: #9CA3AF;
+          font-weight: 600;
+          line-height: 1;
+          margin-bottom: 4px;
+        }
+
+        .pill-number {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #374151;
+          line-height: 1;
+        }
+
+        .icon-wrapper {
+          width: 60px;
+          height: 60px;
+          background: #f0ece6;
+          color: var(--primary);
+          border-radius: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .search-bar svg {
+          position: absolute;
+          left: 1.2rem;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
+        }
+
+        .search-bar input {
+          padding: 16px 16px 16px 48px;
+        }
+
+        .actions-area {
+          margin-bottom: 30px;
+          gap: 20px;
+        }
+
+        .alphabet-section {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .management-table thead tr {
+          background-color: #374151;
+        }
+
+        .management-table thead th {
+          padding: 24px 40px;
+          letter-spacing: 3px;
+          border: none;
+        }
+
+        .guest-row {
+          cursor: default;
+          border: none;
+        }
+
+        .guest-row td {
+          padding: 25px 40px;
+        }
+
+        .guest-row:nth-child(even) {
+          background-color: #f9fafb;
+        }
+
+        .guest-row:nth-child(odd) {
+          background-color: #ffffff;
+        }
+
+        .guest-row:hover {
+          background-color: #f3f4f6;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
           .stats-card {
             max-width: none;
+          }
+          .actions-area {
+            gap: 15px;
           }
         }
       `}} />

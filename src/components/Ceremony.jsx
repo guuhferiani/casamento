@@ -44,18 +44,38 @@ const Ceremony = () => {
                     <strong>Local</strong>
                     <p className="location-name">Max Belém</p>
                     <p className="location-type">Salão de Festas (Condomínio)</p>
-                    <p className="location-address">
+                    <p className="location-address" id="event-address">
                       R. Elói Cerqueira, 287 <br />
                       Belém, São Paulo - SP
                     </p>
-                    <a
-                      href="https://www.google.com/maps/search/?api=1&query=R.+Elói+Cerqueira,+287+-+Belem,+São+Paulo+-+SP"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="map-link"
-                    >
-                      Ver no Google Maps
-                    </a>
+                    <div className="map-actions">
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=R.+Elói+Cerqueira,+287+-+Belem,+São+Paulo+-+SP"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="map-btn google"
+                      >
+                        Google Maps
+                      </a>
+                      <a
+                        href="https://waze.com/ul?ll=-23.541464,-46.591645&navigate=yes"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="map-btn waze"
+                      >
+                        Waze
+                      </a>
+                      <button 
+                        onClick={() => {
+                          const address = "R. Elói Cerqueira, 287 - Belém, São Paulo - SP";
+                          navigator.clipboard.writeText(address);
+                          alert("Endereço copiado para a área de transferência!");
+                        }}
+                        className="map-btn copy"
+                      >
+                        Copiar Endereço
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

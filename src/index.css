@@ -835,12 +835,52 @@ nav .container {
   line-height: 1.4 !important;
 }
 
-.map-link {
+.map-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.map-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  background: white;
   color: var(--primary);
-  font-size: 0.85rem;
-  text-decoration: underline;
-  margin-top: 5px;
-  display: inline-block;
+  cursor: pointer;
+}
+
+.map-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border-color: var(--primary);
+}
+
+.map-btn.google {
+  background-color: #f8f9fa;
+}
+
+.map-btn.waze {
+  background-color: #f0f4f9;
+}
+
+.map-btn.copy {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.map-btn.copy:hover {
+  background-color: #333;
 }
 
 @media (max-width: 768px) {
