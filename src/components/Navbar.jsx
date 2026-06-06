@@ -53,7 +53,14 @@ const Navbar = () => {
     { name: 'Início', href: '#home' },
     { name: 'Nossa História', href: '#story' },
     { name: 'Cerimônia', href: '#ceremony' },
-    { name: 'Galeria de Fotos', href: '/galeria', isInternal: true },
+    {
+      name: 'Fotos',
+      href: '#',
+      submenu: [
+        { name: 'Galeria Pré-Wedding', href: '/galeria', isInternal: true },
+        { name: 'Mural do Casamento', href: '/mural', isInternal: true }
+      ]
+    },
     {
       name: 'Presentes',
       href: '#',
@@ -141,7 +148,7 @@ const Navbar = () => {
                     }}
                     className={`flex items-center gap-1 text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
                       (scrolled || !isHome) ? 'text-text-main hover:text-primary' : 'text-white/80 hover:text-white'
-                    } ${desktopSubmenu === link.name ? 'text-primary opacity-100' : ''}`}
+                    } ${desktopSubmenu === link.name ? ((scrolled || !isHome) ? 'text-primary opacity-100' : 'text-white opacity-100') : ''}`}
                     aria-haspopup="true"
                     aria-expanded={desktopSubmenu === link.name}
                   >
