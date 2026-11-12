@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, X, MessageSquare, Send, CheckCircle2, Loader2 } from 'lucide-react';
-import { supabase } from '../lib/supabaseClient';
+import { createMensagem } from '../lib/apiClient';
 
 const Story = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,12 +15,8 @@ const Story = () => {
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('mensagens_noivos')
-        .insert([{ nome, mensagem }]);
+      await createMensagem({ nome, mensagem });
 
-      if (error) throw error;
-      
       setSubmitted(true);
       setNome('');
       setMensagem('');

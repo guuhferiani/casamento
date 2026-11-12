@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Search, FileDown, ArrowLeft, Loader2, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
+import { getConvidados } from '../lib/apiClient';
 import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
 
@@ -15,46 +15,19 @@ const GuestManagement = () => {
     fetchGuests();
     window.scrollTo(0, 0);
 
-    // Subscribe to real-time updates for RSVP confirmations
-    const subscription = supabase
-      .channel('convidados_management_changes')
-      .on('postgres_changes', 
-        { 
-          event: 'UPDATE', 
-          schema: 'public', 
-          table: 'convidados' 
-        }, 
-        (payload) => {
-          // If a guest was confirmed, refresh the list
-          if (payload.new.confirmado) {
-            setGuests((prev) => {
-              const exists = prev.find(g => g.id === payload.new.id);
-              if (exists) {
-                return prev.map(g => g.id === payload.new.id ? payload.new : g);
-              } else {
-                return [payload.new, ...prev].sort((a, b) => a.nome_na_lista.localeCompare(b.nome_na_lista));
-              }
-            });
-          }
-        }
-      )
-      .subscribe();
+    const interval = setInterval(() => {
+      fetchGuests(true);
+    }, 30000);
 
     return () => {
-      supabase.removeChannel(subscription);
+      clearInterval(interval);
     };
   }, []);
 
-  const fetchGuests = async () => {
-    setLoading(true);
+  const fetchGuests = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('convidados')
-        .select('*')
-        .eq('confirmado', true)
-        .order('nome_na_lista', { ascending: true });
-
-      if (error) throw error;
+      const data = await getConvidados({ onlyConfirmed: true });
       setGuests(data || []);
     } catch (error) {
       console.error('Erro ao buscar convidados:', error.message);

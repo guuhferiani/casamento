@@ -1,200 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, Send, ArrowLeft, Loader2, Heart, Plus, X, ZoomIn } from 'lucide-react';
-import { supabase } from '../lib/supabaseClient';
+import { Camera, ArrowLeft, Loader2, X, ZoomIn } from 'lucide-react';
+import { getFotos } from '../lib/apiClient';
 
 const Mural = () => {
   const [fotos, setFotos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [nome, setNome] = useState('');
-  const [legenda, setLegenda] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [progressStatus, setProgressStatus] = useState('');
   const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     fetchFotos();
     window.scrollTo(0, 0);
-
-    // Subscrever a atualizações em tempo real no banco
-    const subscription = supabase
-      .channel('public:fotos_casamento')
-      .on('postgres_changes', 
-        { 
-          event: 'INSERT', 
-          schema: 'public', 
-          table: 'fotos_casamento' 
-        }, 
-        (payload) => {
-          // Adicionar a foto no início da lista
-          setFotos((prevFotos) => [payload.new, ...prevFotos]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(subscription);
-    };
   }, []);
 
   const fetchFotos = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('fotos_casamento')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
+      const data = await getFotos();
       setFotos(data || []);
     } catch (error) {
       console.error('Erro ao buscar fotos:', error.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // Verificar se o arquivo é uma imagem
-    if (!file.type.startsWith('image/')) {
-      alert('Por favor, selecione apenas arquivos de imagem.');
-      return;
-    }
-
-    setSelectedFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
-
-  // Função de compressão da imagem usando Canvas API
-  const compressImage = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 1200;
-          const MAX_HEIGHT = 1200;
-          let width = img.width;
-          let height = img.height;
-
-          // Manter proporção redimensionando para dimensões máximas
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                const compressedFile = new File([blob], file.name, {
-                  type: 'image/jpeg',
-                  lastModified: Date.now()
-                });
-                resolve(compressedFile);
-              } else {
-                reject(new Error('Erro ao gerar blob da imagem.'));
-              }
-            },
-            'image/jpeg',
-            0.75 // Qualidade JPEG (75% é excelente custo-benefício)
-          );
-        };
-        img.onerror = (err) => reject(err);
-      };
-      reader.onerror = (err) => reject(err);
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!nome || !selectedFile) {
-      alert('Por favor, digite seu nome e escolha uma foto.');
-      return;
-    }
-
-    setSubmitting(true);
-    try {
-      // Passo 1: Comprimir a imagem
-      setProgressStatus('Otimizando imagem...');
-      const compressedFile = await compressImage(selectedFile);
-
-      // Passo 2: Upload para o Supabase Storage
-      setProgressStatus('Enviando foto...');
-      const fileExt = 'jpg';
-      const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-      
-      const { data: storageData, error: storageError } = await supabase.storage
-        .from('fotos-casamento')
-        .upload(fileName, compressedFile, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (storageError) throw storageError;
-
-      // Passo 3: Pegar a URL pública da foto
-      const { data: { publicUrl } } = supabase.storage
-        .from('fotos-casamento')
-        .getPublicUrl(fileName);
-
-      // Passo 4: Inserir registro na tabela
-      setProgressStatus('Registrando no mural...');
-      const { error: dbError } = await supabase
-        .from('fotos_casamento')
-        .insert([
-          {
-            nome_convidado: nome,
-            legenda: legenda,
-            foto_url: publicUrl
-          }
-        ]);
-
-      if (dbError) throw dbError;
-
-      // Resetar form e fechar modal
-      setNome('');
-      setLegenda('');
-      setSelectedFile(null);
-      setPreviewUrl(null);
-      setShowModal(false);
-      
-    } catch (error) {
-      console.error('Erro no upload:', error);
-      alert('Erro ao enviar a foto: ' + error.message);
-    } finally {
-      setSubmitting(false);
-      setProgressStatus('');
-    }
-  };
-
-  const closeModal = () => {
-    if (submitting) return;
-    setShowModal(false);
-    setSelectedFile(null);
-    setPreviewUrl(null);
-    setLegenda('');
   };
 
   return (
@@ -222,14 +50,9 @@ const Mural = () => {
               <div className="w-24 h-[1px] bg-primary"></div>
             </div>
             <p className="description max-w-2xl mx-auto text-center font-serif italic text-text-muted text-lg">
-              Tirou alguma foto linda ou divertida durante a nossa cerimônia ou festa? 
-              Envie do seu celular para fazer parte da nossa história!
+              Recordações especiais compartilhadas pelos nossos convidados durante a celebração.
             </p>
           </div>
-
-          <button className="btn flex items-center gap-2" onClick={() => setShowModal(true)}>
-            <Plus size={18} /> Compartilhar Foto
-          </button>
         </header>
 
         {loading ? (
@@ -273,8 +96,7 @@ const Mural = () => {
           <div className="text-center py-24 bg-gray-50 rounded-lg border border-dashed border-gray-200 animate-fade-in max-w-lg mx-auto">
             <Camera size={60} className="text-primary-light mx-auto mb-4 opacity-50" />
             <p className="text-xl text-text-muted font-serif italic mb-2">O mural ainda está vazio!</p>
-            <p className="text-sm text-text-muted uppercase tracking-wider mb-6">Seja o primeiro a compartilhar um momento do dia de hoje!</p>
-            <button className="btn" onClick={() => setShowModal(true)}>Enviar a Primeira Foto</button>
+            <p className="text-sm text-text-muted uppercase tracking-wider">Novos envios de fotos estão encerrados.</p>
           </div>
         )}
       </div>
@@ -295,104 +117,6 @@ const Mural = () => {
               <span className="lightbox-author">Por: {lightboxImage.nome_convidado}</span>
               {lightboxImage.legenda && <p className="lightbox-caption">{lightboxImage.legenda}</p>}
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal de Upload de Fotos */}
-      {showModal && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="mural-modal modal" onClick={e => e.stopPropagation()}>
-            <button className="close-btn" onClick={closeModal} disabled={submitting}>
-              <X size={24} />
-            </button>
-            
-            <div className="modal-header text-center">
-              <Camera className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-serif mb-2">Compartilhe um Momento</h3>
-              <p className="text-text-muted text-xs uppercase tracking-widest">Sua foto aparecerá instantaneamente no mural do telão e do site!</p>
-            </div>
-
-            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label className="block text-xs uppercase tracking-[0.2em] font-semibold mb-2">Seu Nome</label>
-                <input 
-                  type="text" 
-                  className="w-full p-4 bg-gray-50 border border-gray-100 focus:border-primary outline-none transition-all rounded text-sm"
-                  placeholder="Ex: Seu nome, Família Feriani"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  required
-                  disabled={submitting}
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="block text-xs uppercase tracking-[0.2em] font-semibold mb-2">Foto</label>
-                {!previewUrl ? (
-                  <div className="photo-picker-zone">
-                    <input 
-                      type="file" 
-                      id="mural-file" 
-                      accept="image/*" 
-                      onChange={handleFileChange}
-                      required
-                      className="hidden"
-                    />
-                    <label htmlFor="mural-file" className="photo-picker-label cursor-pointer">
-                      <Camera size={32} className="text-text-muted mb-2" />
-                      <span className="text-sm font-medium text-text-muted uppercase tracking-wider">Tirar Foto ou Escolher Arquivo</span>
-                      <span className="text-xs text-text-muted mt-1 opacity-75">Tire do celular na hora!</span>
-                    </label>
-                  </div>
-                ) : (
-                  <div className="photo-preview-container">
-                    <img src={previewUrl} alt="Preview do upload" className="photo-preview-image" />
-                    <button 
-                      type="button" 
-                      className="photo-remove-btn" 
-                      onClick={() => {
-                        setSelectedFile(null);
-                        setPreviewUrl(null);
-                      }}
-                      disabled={submitting}
-                    >
-                      <X size={16} /> Remover Foto
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label className="block text-xs uppercase tracking-[0.2em] font-semibold mb-2">Legenda / Mensagem (Opcional)</label>
-                <textarea 
-                  className="w-full p-4 bg-gray-50 border border-gray-100 focus:border-primary outline-none transition-all rounded text-sm min-h-[80px]"
-                  placeholder="Ex: Viva os noivos! Que festa linda!"
-                  value={legenda}
-                  onChange={(e) => setLegenda(e.target.value)}
-                  disabled={submitting}
-                  maxLength={150}
-                ></textarea>
-              </div>
-
-              <button 
-                type="submit" 
-                className="btn w-full flex items-center justify-center gap-2 py-4"
-                disabled={submitting}
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="animate-spin" size={20} />
-                    <span>{progressStatus}</span>
-                  </>
-                ) : (
-                  <>
-                    <Send size={18} />
-                    <span>Publicar no Mural</span>
-                  </>
-                )}
-              </button>
-            </form>
           </div>
         </div>
       )}

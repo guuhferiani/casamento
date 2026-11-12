@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { getConvidados, confirmarConvidado } from '../lib/apiClient';
 import { Check, Loader2, Search } from 'lucide-react';
 
 const RSVP = () => {
@@ -29,12 +29,7 @@ const RSVP = () => {
 
   const fetchGuests = async () => {
     try {
-      const { data, error } = await supabase
-        .from('convidados')
-        .select('id, nome_na_lista, confirmado')
-        .order('nome_na_lista', { ascending: true });
-
-      if (error) throw error;
+      const data = await getConvidados();
       setGuests(data || []);
     } catch (error) {
       console.error('Erro ao buscar convidados:', error.message);
@@ -65,15 +60,8 @@ const RSVP = () => {
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('convidados')
-        .update({ 
-          confirmado: true
-        })
-        .eq('id', selectedGuest.id);
+      await confirmarConvidado(selectedGuest.id);
 
-      if (error) throw error;
-      
       setSubmitted(true);
       fetchGuests();
     } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, MessageSquare, Send, ArrowLeft, Loader2, Quote } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
+import { getMensagens, createMensagem } from '../lib/apiClient';
 import Story from './Story'; // Importing to reuse the modal if needed, but better to implement here for isolation
 
 const Messages = () => {
@@ -17,41 +17,24 @@ const Messages = () => {
     fetchMessages();
     window.scrollTo(0, 0);
 
-    // Subscribe to real-time updates
-    const subscription = supabase
-      .channel('mensagens_noivos_changes')
-      .on('postgres_changes', 
-        { 
-          event: 'INSERT', 
-          schema: 'public', 
-          table: 'mensagens_noivos' 
-        }, 
-        (payload) => {
-          // Add the new message to the top of the list
-          setMessages((prevMessages) => [payload.new, ...prevMessages]);
-        }
-      )
-      .subscribe();
+    const interval = setInterval(() => {
+      fetchMessages(true);
+    }, 30000);
 
     return () => {
-      supabase.removeChannel(subscription);
+      clearInterval(interval);
     };
   }, []);
 
-  const fetchMessages = async () => {
-    setLoading(true);
+  const fetchMessages = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('mensagens_noivos')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
+      const data = await getMensagens();
       setMessages(data || []);
     } catch (error) {
       console.error('Erro ao buscar mensagens:', error.message);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
@@ -61,12 +44,11 @@ const Messages = () => {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase
-        .from('mensagens_noivos')
-        .insert([{ nome, mensagem }]);
+      const created = await createMensagem({ nome, mensagem });
+      if (created) {
+        setMessages((prev) => [created, ...prev]);
+      }
 
-      if (error) throw error;
-      
       setSubmitted(true);
       setNome('');
       setMensagem('');
