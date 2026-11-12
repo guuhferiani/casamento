@@ -13,6 +13,18 @@ const Gallery = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Bloqueia a rolagem da página quando o modal da foto estiver aberto
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedImage]);
+
   const images = validIds.map(id => ({
     id,
     url: `/images/G_M-${id}.webp`,
@@ -82,13 +94,13 @@ const Gallery = () => {
       {/* Lightbox Modal */}
       {selectedImage && (
         <div className="modal-overlay" onClick={() => setSelectedImage(null)}>
-          <div className="gallery-modal" onClick={e => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setSelectedImage(null)}>
-              <X size={32} />
-            </button>
+          <button className="gallery-close-btn" onClick={() => setSelectedImage(null)} title="Fechar">
+            <X size={26} />
+          </button>
 
-            <button className="nav-btn prev" onClick={handlePrev}>
-              <ChevronLeft size={48} />
+          <div className="gallery-modal" onClick={e => e.stopPropagation()}>
+            <button className="nav-btn prev" onClick={handlePrev} title="Foto anterior">
+              <ChevronLeft size={36} />
             </button>
 
             <img
@@ -98,8 +110,8 @@ const Gallery = () => {
               className="animate-fade-in"
             />
 
-            <button className="nav-btn next" onClick={handleNext}>
-              <ChevronRight size={48} />
+            <button className="nav-btn next" onClick={handleNext} title="Próxima foto">
+              <ChevronRight size={36} />
             </button>
 
             <div className="image-counter">
