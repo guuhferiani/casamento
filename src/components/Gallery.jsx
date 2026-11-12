@@ -49,36 +49,40 @@ const Gallery = () => {
   }, [activeIdx]);
 
   return (
-    <div className="gallery-page animate-fade-in">
-      <div className="container">
-        <header className="gallery-header">
-          <Link to="/" className="back-link">
-            <ArrowLeft size={20} /> Voltar para o Início
+    <div className="album-page">
+      <div className="album-container">
+        <header className="album-header">
+          <Link to="/" className="album-back-link">
+            <ArrowLeft size={18} /> Voltar para o Início
           </Link>
-          <div className="section-title">
-            <p>Para Sempre</p>
-            <h2 className="logo-text">Nossa Galeria</h2>
-            <p className="description">Depois de tantos passos lindos juntos, decidimos seguir o mesmo caminho para todo sempre!</p>
-            <p className="description">Queremos celebrar essa união com as pessoas que mais amamos, cercados de bons brindes, muitos sorrisos e energia positiva.</p>
+          <div className="album-title-box">
+            <span className="album-subtitle">Para Sempre</span>
+            <h1 className="logo-text album-title">Nossa Galeria</h1>
+            <p className="album-desc">
+              Depois de tantos passos lindos juntos, decidimos seguir o mesmo caminho para todo sempre!
+            </p>
+            <p className="album-desc">
+              Queremos celebrar essa união com as pessoas que mais amamos, cercados de bons brindes, muitos sorrisos e energia positiva.
+            </p>
           </div>
         </header>
 
-        {/* Gallery Grid elegante e responsiva */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/* Grade de Fotos (Grid 4 colunas quadrada como casamento-miriam-regi) */}
+        <div className="album-grid">
           {images.map((img, idx) => (
             <div
               key={img.id}
               onClick={() => openLightbox(idx)}
-              className="group aspect-square overflow-hidden rounded-2xl bg-gray-100 cursor-pointer relative shadow-sm hover:shadow-md transition-all duration-300"
+              className="album-card"
             >
               <img
                 src={img.url}
                 alt={img.alt}
                 loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="album-card-img"
               />
-              <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white font-sans text-xs uppercase tracking-wider font-medium bg-black/80 px-4 py-2 rounded-full shadow-sm">
+              <div className="album-card-overlay">
+                <span className="album-badge">
                   Visualizar
                 </span>
               </div>
@@ -87,49 +91,45 @@ const Gallery = () => {
         </div>
       </div>
 
-      {/* Lightbox Modal idêntico ao padrão funcional do casamento-miriam-regi */}
+      {/* Lightbox Modal (Exatamente o layout da referência) */}
       {activeIdx !== null && (
-        <div
-          onClick={closeLightbox}
-          className="fixed inset-0 z-[100000] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300"
-        >
-          {/* Close button */}
+        <div className="album-lightbox" onClick={closeLightbox}>
+          {/* Botão Fechar no canto superior direito */}
           <button
             onClick={closeLightbox}
-            className="absolute top-6 right-6 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 z-[100002]"
+            className="album-btn-close"
             aria-label="Fechar visualização"
           >
-            <X size={24} />
+            <X size={22} />
           </button>
 
-          {/* Previous button */}
+          {/* Botão Anterior */}
           <button
             onClick={handlePrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 z-[100002] active:scale-95"
+            className="album-btn-nav prev"
             aria-label="Foto anterior"
           >
             <ChevronLeft size={28} />
           </button>
 
-          {/* Active Image Container */}
-          <div className="max-w-4xl max-h-[80vh] flex items-center justify-center relative select-none">
+          {/* Imagem Central */}
+          <div className="album-lightbox-content" onClick={(e) => e.stopPropagation()}>
             <img
               src={images[activeIdx].url}
               alt={images[activeIdx].alt}
               key={images[activeIdx].id}
-              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl animate-fade-in"
-              onClick={(e) => e.stopPropagation()}
+              className="album-lightbox-img"
             />
-            {/* Image Counter */}
-            <div className="absolute bottom-[-40px] left-1/2 -translate-x-1/2 text-white/70 font-sans text-sm font-light tracking-widest">
+            {/* Contador */}
+            <div className="album-lightbox-counter">
               {activeIdx + 1} / {images.length}
             </div>
           </div>
 
-          {/* Next button */}
+          {/* Botão Próximo */}
           <button
             onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 z-[100002] active:scale-95"
+            className="album-btn-nav next"
             aria-label="Próxima foto"
           >
             <ChevronRight size={28} />
